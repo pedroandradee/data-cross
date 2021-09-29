@@ -20,10 +20,7 @@ available:
 
 | VARIABLE | DESCRIPTION  | DEFAULT |
 |-----|-----|-----|
-| `NODE_ENV` | Defines the environment in which the application runs. You can set: `test` _(in this environment, the
-database defined in `MONGODB_URI_TEST` is used and the logs are disabled for better visualization of the test
-output)_, `development` _(in this environment, all log levels are enabled)_ and `production` _(in this environment, only
-the warning and error logs are enabled)_. | `development` |
+| `NODE_ENV` | Defines the environment in which the application runs. You can set: `test` _(in this environment, the database defined in `MONGODB_URI_TEST` is used and the logs are disabled for better visualization of the test output)_, `development` _(in this environment, all log levels are enabled)_ and `production` _(in this environment, only the warning and error logs are enabled)_. | `development` |
 | `PORT_HTTP` | Port used to listen for HTTP requests. Any request received on this port is redirected to the HTTPS port. | `3000` |
 | `PORT_HTTPS` | Port used to listen for HTTPS requests. Do not forget to provide the private key and the SSL/TLS certificate. See the topic [generate certificates](#generate-certificates). | `3001` |
 | `SSL_KEY_PATH` | SSL/TLS certificate private key. | `./.certs/server_key.pem` |
