@@ -19,8 +19,8 @@ export abstract class Default {
     public static readonly LOGO_URI: string = 'https://i.imgur.com/NSbFJ02.png'
 
     // MongoDB
-    public static readonly MONGODB_URI: string = 'mongodb://127.0.0.1:27017/data-cross'
-    public static readonly MONGODB_URI_TEST: string = 'mongodb://127.0.0.1:27017/data-cross-test'
+    public static readonly MONGODB_URI: string = 'mongodb+srv://SYSDBA:masterkey@cluster0.wivsc.mongodb.net/smtc'
+    public static readonly MONGODB_URI_TEST: string = 'mongodb+srv://SYSDBA:masterkey@cluster0.wivsc.mongodb.net/test'
 
     // Log
     public static readonly LOG_DIR: string = 'logs'

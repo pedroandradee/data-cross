@@ -5,12 +5,12 @@ import { inject } from 'inversify'
 import { Identifier } from '../../di/identifiers'
 import { ApiExceptionManager } from '../exception/api.exception.manager'
 import { IQuery } from '../../application/port/query.interface'
-import { IAnnex2Table2DService } from '../../application/port/annex2table2d.service'
+import { IAnnex2Table2HService } from '../../application/port/annex2table2h.service'
 import { Query } from '../../infrastructure/repository/query/query'
-import { Annex2Table2D } from '../../application/domain/model/annex2table2d'
+import { Annex2Table2H } from '../../application/domain/model/annex2table2h'
 
-@controller('/v1/scanc/a2q2d')
-export class Annex2table2dController {
+@controller('/v1/scanc/a2q2h')
+export class Annex2table2hController {
     private static handlerError(res: Response, err: any) {
         const handlerError = ApiExceptionManager.build(err)
         return res.status(handlerError.code)
@@ -18,38 +18,37 @@ export class Annex2table2dController {
     }
 
     constructor(
-        @inject(Identifier.ANNEX2TABLE2D_SERVICE) private readonly _service: IAnnex2Table2DService
+        @inject(Identifier.ANNEX2TABLE2H_SERVICE) private readonly _service: IAnnex2Table2HService
     ) {
     }
 
     @httpPost('/')
     public async create(@request() req: Request, @response() res: Response): Promise<Response> {
         try {
-            const entity: Annex2Table2D = new Annex2Table2D().fromJSON(req.body)
-            const result: Annex2Table2D | undefined = await this._service.add(entity)
+            const entity: Annex2Table2H = new Annex2Table2H().fromJSON(req.body)
+            const result: Annex2Table2H | undefined = await this._service.add(entity)
             return res.status(HttpStatus.CREATED).send(this.toJSONView(result))
         } catch (err) {
-            return Annex2table2dController.handlerError(res, err)
+            return Annex2table2hController.handlerError(res, err)
         }
     }
 
     @httpGet('/')
     public async getAll(@request() req: Request, @response() res: Response): Promise<Response> {
         try {
-            console.log('oi')
             const query: IQuery = new Query().fromJSON(req.query)
             const othersFilter = {}
             query.addFilter(othersFilter)
-            const result: Array<Annex2Table2D> = await this._service.getAll(query)
+            const result: Array<Annex2Table2H> = await this._service.getAll(query)
             const count: number = await this._service.count(query)
             res.setHeader('X-Total-Count', count)
             return res.status(200).send(result)
         } catch (err) {
-            return Annex2table2dController.handlerError(res, err)
+            return Annex2table2hController.handlerError(res, err)
         }
     }
 
-    private toJSONView(entity: Annex2Table2D | Array<Annex2Table2D> | undefined): object {
+    private toJSONView(entity: Annex2Table2H | Array<Annex2Table2H> | undefined): object {
         if (entity instanceof Array) return entity.map(item => this.toJSONView(item))
         return entity?.toJSON()
     }

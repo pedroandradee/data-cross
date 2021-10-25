@@ -16,7 +16,7 @@ export class HomeController {
      * @returns void
      */
     @httpGet('/')
-    public redirectToReference(@request() req: Request, @response() res: Response): void {
+    public getReference(@request() req: Request, @response() res: Response): void {
         return res.redirect('/v1/reference')
     }
 }

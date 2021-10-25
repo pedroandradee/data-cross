@@ -8,7 +8,7 @@ import { Query } from './query/query'
 import { IAnnex2Table2DRepository } from '../../application/port/annex2table2d.repository'
 
 @injectable()
-export class Annex2Table2DRepository
+export class CompanyRepository
     extends BaseRepository<Annex2Table2DModel, Annex2Table2DEntity>
     implements IAnnex2Table2DRepository {
     constructor(
@@ -21,7 +21,7 @@ export class Annex2Table2DRepository
 
     public async checkExists(entity: Annex2Table2DEntity): Promise<boolean> {
         const query: Query = new Query()
-            .fromJSON({ filters: { _id: { $ne: entity.id }, month_year: entity.month_year } })
+            .fromJSON({ filters: { _id: { $ne: entity.id }, MESANO: entity.month_year } })
         return new Promise<boolean>((resolve, reject) => {
             super.findOne(query)
                 .then((result: Annex2Table2DEntity | undefined) => resolve(!!result))
