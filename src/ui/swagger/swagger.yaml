@@ -1,0 +1,1380 @@
+openapi: 3.0.0
+info:
+  version: v1
+  title: Data Cross
+  description: Documentation for the data crossover service - Data Cross
+
+servers:
+  - description: HTTPS Localhost
+    url: https://localhost:3001
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+      url: https://virtserver.swaggerhub.com/SMTC3/data-cross/0.1.0
+tags:
+  - name: Scanc Header
+    description: Endpoints to manipulate SCANC headers
+
+  - name: Scanc Annex II
+    description: Endpoints to manipulate SCANC Annex II
+
+  - name: Scanc Annex IV
+    description: Endpoints to manipulate SCANC Annex IV
+
+paths:
+
+  /scanc/header:
+    post:
+      tags:
+        - Scanc Header
+      summary: 'Register a new annex summary.'
+      operationId: addAnnexSummary
+      requestBody:
+        required: true
+        description: List of annexes to be inserted.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TBHEADER'
+      responses:
+        '207':
+          description: Successful request, however, can have several status codes for the case of a list of submitted resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MULTISTATUS'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+
+  /scanc/a2q2d:
+    post:
+      tags:
+        - Scanc Annex II
+      summary: 'Registration of a new type II annex.'
+      operationId: addAnnexIIData
+      requestBody:
+        required: true
+        description: List of annexes to be inserted.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TBA2Q2D'
+      responses:
+        '207':
+          description: Successful request, however, can have several status codes for the case of a list of submitted resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MULTISTATUS'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+    get:
+      tags:
+        - Scanc Annex II
+      summary: 'Retrieve the list of attachments for the given month'
+      operationId: getAnnexIIData
+      parameters:
+        - $ref: '#/components/parameters/fieldsParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+        - $ref: '#/components/parameters/filterParam'
+      responses:
+        200:
+          description: Attachment summary list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TBA2Q2D'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+
+  /scanc/a2q2h:
+    post:
+      tags:
+        - Scanc Annex II
+      summary: 'Registration of a new type II annex.'
+      operationId: addAnnexIIHeader
+      requestBody:
+        required: true
+        description: List of annexes to be inserted.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TBA2Q2H'
+      responses:
+        '207':
+          description: Successful request, however, can have several status codes for the case of a list of submitted resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MULTISTATUS'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+    get:
+      tags:
+        - Scanc Annex II
+      summary: 'Retrieve the list of attachments'
+      operationId: getAnnexIIHeader
+      parameters:
+        - $ref: '#/components/parameters/fieldsParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+        - $ref: '#/components/parameters/filterParam'
+      responses:
+        200:
+          description: Annex summary list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TBA2Q2D'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+
+  /annexsummary/{source}/{annex_type}/{month_year}:
+    get:
+      tags:
+        - Annex Summary
+      summary: 'Retrieve the summary of an attachment type for a given month.'
+      operationId: getAnnexSummary
+      parameters:
+        - name: source
+          in: path
+          required: true
+          description: Summary source.
+          schema:
+            type: string
+            enum: [ 'scanc','nfe' ]
+          example: 'scanc'
+        - name: annex_type
+          in: path
+          required: true
+          description: 'Annex type identifier'
+          schema:
+            type: string
+            enum: [ '0','1','2','3','4','5','6','7','8','9','9A','10','10A','11','11A' ]
+        - name: month_year
+          in: path
+          required: true
+          description: Month and year identifier.
+          schema:
+            type: string
+          example: '012021'
+      responses:
+        200:
+          description: Attachment summary list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ANNEXSUMARRY'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+
+  /scanc/a4q2d:
+    post:
+      tags:
+        - Scanc Annex IV
+      summary: 'Registration of a new type IV annex.'
+      operationId: addAnnexIVData
+      requestBody:
+        required: true
+        description: List of annexes to be inserted.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TBA4Q2D'
+      responses:
+        '207':
+          description: Successful request, however, can have several status codes for the case of a list of submitted resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MULTISTATUS'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+    get:
+      tags:
+        - Scanc Annex IV
+      summary: 'Retrieve the list of attachments for the given month'
+      operationId: getAnnexIVData
+      parameters:
+        - $ref: '#/components/parameters/fieldsParam'
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+        - $ref: '#/components/parameters/filterParam'
+      responses:
+        200:
+          description: Attachment summary list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TBA4Q2D'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+
+  /scanc/a4q2h:
+    post:
+      tags:
+        - Scanc Annex IV
+      summary: 'Registration of a new type IV annex.'
+      operationId: addAnnexIVHeader
+      requestBody:
+        required: true
+        description: List of annexes to be inserted.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TBA4Q2H'
+      responses:
+        '207':
+          description: Successful request, however, can have several status codes for the case of a list of submitted resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MULTISTATUS'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+
+  /nfe:
+    post:
+      tags:
+        - Electronic Invoices
+      summary: ''
+      operationId: addElectronicInvoice
+      requestBody:
+        required: true
+        description: List of nfe to be inserted.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/NFE'
+      responses:
+        '207':
+          description: Successful request, however, can have several status codes for the case of a list of submitted resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MULTISTATUS'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        409:
+          $ref: '#/components/responses/409'
+        500:
+          $ref: '#/components/responses/500'
+
+components:
+
+  schemas:
+
+    TBHEADER:
+      type: object
+      description: 'Data model used by type TBHEADER'
+      properties:
+        MESANO:
+          type: string
+          maxLength: 6
+          description: 'Identifier of the month and year of registration.'
+          example: '012021'
+        ID:
+          type: string
+          maxLength: 3
+          description: 'Identifier of registration.'
+          example: '006'
+        ANEXO:
+          type: string
+          maxLength: 3
+          enum: [ '0','1','2','3','4','5','6','7','8','9','9A','10','10A','11','11A' ]
+          description: 'Annex type identifier'
+          example: '2'
+        PRODUTO:
+          type: string
+          maxLength: 3
+          enum: [ "AEA","B00","DSL", "DSM","GLN","GLP","GPN", "GSL", "GSP", "OCB", "QAV", "S10" ]
+          description: 'Type of fuel'
+          example: 'S10'
+        UFORIGEM:
+          type: string
+          maxLength: 2
+          description: 'State of the company of origin.'
+          example: 'PB'
+        CNPJFOR:
+          type: string
+          readOnly: true
+          maxLength: 14
+          description: 'CNPJ of the supplier.'
+          example: '26090286000137'
+        IEFOR:
+          type: string
+          maxLength: 14
+          description: 'Supplier state registration.'
+          example: '016122778'
+        UFDESTINO:
+          type: string
+          maxLength: 2
+          description: 'State of destination.'
+          example: 'PB'
+        UFOUTRAS:
+          type: string
+          maxLength: 2
+          description: "Other UF's."
+          example: 'PB'
+        CNPJ:
+          type: string
+          maxLength: 14
+          description: 'Cnpj of the recipient company.'
+          example: '26090286000137'
+        IE:
+          type: string
+          maxLength: 14
+          description: 'State registration of the recipient company.'
+          example: '016122778'
+        IEST:
+          type: string
+          maxLength: 14
+          description: 'IEST of the recipient company.'
+          example: '016122778'
+        RAZSOCIAL:
+          type: string
+          maxLength: 60
+          description: 'Business name of the recipient of the transaction.'
+          example: 'Distribuidora de Combustíveis S/A'
+        ENDERECO:
+          type: string
+          maxLength: 60
+          description: 'Address of the recipient of the transaction.'
+          example: 'Rua do Comercio SN'
+        BAIRRO:
+          type: string
+          maxLength: 30
+          description: 'Neighborhood of the recipient of the operation.'
+          example: 'Centro'
+        MUNICIPIO:
+          type: string
+          maxLength: 40
+          description: 'Municipality of the recipient of the operation.'
+          example: 'Campina Grande'
+        UF:
+          type: string
+          readOnly: true
+          maxLength: 2
+          description: 'State of the recipient of the transaction'
+          example: 'PB'
+        CEP:
+          type: string
+          maxLength: 14
+          description: 'Zip code of the recipient of the transaction.'
+          example: '58414040'
+        EMAIL:
+          type: string
+          maxLength: 60
+          description: 'Responsible contact email'
+          example: 'contact@mail.com'
+        CATEGORIA:
+          type: string
+          maxLength: 3
+          description: 'Issuer category'
+          enum: [ 'DIS','IMP','REF','TRR' ]
+          example: 'DIS'
+        FONE:
+          type: string
+          maxLength: 12
+          description: 'Responsible contact phone number'
+          example: '01131776355'
+        CONTATO:
+          type: string
+          maxLength: 40
+          description: 'Name of responsible'
+          example: 'João Alberto'
+        CARGOCT:
+          type: string
+          maxLength: 40
+          description: 'Responsible position'
+          example: 'DIRETOR ADMINISTRATIVO'
+        CPFCT:
+          type: string
+          maxLength: 11
+          description: 'CPF of the responsible'
+          example: '92760472043'
+        RGCT:
+          type: string
+          maxLength: 14
+          description: 'RG of the responsible'
+          example: '479615809'
+        UFRGCT:
+          type: string
+          readOnly: true
+          maxLength: 2
+          description: 'State of RG of the responsible'
+          example: 'PB'
+        LOCAL:
+          type: string
+          maxLength: 40
+          description: 'City of the issuer of the annex'
+          example: 'Campina Grande'
+        DATA:
+          type: string
+          format: date
+          description: 'Annex issue date'
+          example: '2020-01-01'
+        HORA:
+          type: string
+          maxLength: 8
+          description: 'Annex issue time'
+          example: '11:45:15'
+        ORIGEMANXO:
+          type: string
+          maxLength: 1
+          description: ''
+          example: ''
+
+    TBA2Q2D:
+      type: object
+      description: 'Data model used by type II annexes'
+      required:
+        - CNPJH
+        - IEH
+        - UFH
+        - MESANO
+        - ID
+        - CNPJ
+        - IE
+        - UF
+        - DTEMISSAO
+        - MODELO
+        - SERIE
+        - NUMNF
+        - CFOP
+        - PRODNF
+        - PRODUTO
+        - QTD
+        - QTDGASA
+        - VLRPARTIDA
+        - VLRBCST
+        - ALIQICMS
+        - VLRICMSST
+        - TIPOFRETE
+        - CNPJFRETE
+        - UFFRETE
+        - PLACA1
+        - PLACA2
+        - PLACA3
+        - DESTINACAO
+      properties:
+        CNPJH:
+          type: string
+          maxLength: 14
+          description: 'CNPJ of the company of origin.'
+          example: '26090286000137'
+        IEH:
+          type: string
+          maxLength: 14
+          description: 'State registration of the company of origin.'
+          example: '016122778'
+        UFH:
+          type: string
+          maxLength: 2
+          description: 'State of the company of origin.'
+          example: 'PB'
+        MESANO:
+          type: string
+          maxLength: 6
+          description: 'Identifier of the month and year of registration.'
+          example: '012021'
+        ID:
+          type: string
+          maxLength: 3
+          description: 'Identifier of registration.'
+          example: '006'
+        CNPJ:
+          type: string
+          maxLength: 14
+          description: 'Cnpj of the recipient company.'
+          example: '26090286000137'
+        IE:
+          type: string
+          maxLength: 14
+          description: 'State registration of the recipient company.'
+          example: '016122778'
+        UF:
+          type: string
+          maxLength: 2
+          description: 'State of the recipient company.'
+          example: 'PB'
+        DTEMISSAO:
+          type: string
+          format: date-time
+          description: 'Annex issue date.'
+          example: '2021-01-18T03:00:00.000Z'
+        MODELO:
+          type: string
+          maxLength: 2
+          description: 'Invoice template used.'
+          example: '55'
+        SERIE:
+          type: string
+          maxLength: 3
+          description: 'Invoice serie'
+          example: '3'
+        NUMNF:
+          type: string
+          maxLength: 9
+          description: 'Invoice identifier number'
+          example: '000113265'
+        CFOP:
+          type: string
+          maxLength: 4
+          description: 'Tax code of operations and services.'
+          example: '6659'
+        PRODNF:
+          type: string
+          maxLength: 5
+          description: ''
+          example: '64301'
+        PRODUTO:
+          type: string
+          maxLength: 3
+          enum: [ "DSL", "DSM", "GLP", "GSL", "GSP", "OCB", "S10" ]
+          description: 'Type of fuel'
+          example: 'S10'
+        QTD:
+          type: number
+          description: 'Amount of fuel'
+          example: 45614
+        QTDGASA:
+          type: number
+          description: 'Quantity of type A gasoline'
+          example: 45614
+        VLRPARTIDA:
+          type: number
+          description: 'PMPF value of the product destination'
+          example: 36913
+        VLRBCST:
+          type: number
+          description: 'Tax substitution calculation basis'
+          example: 191335.18
+        ALIQICMS:
+          type: number
+          description: 'Internal rate of product destination'
+          example: 18
+        VLRICMSST:
+          type: number
+          description: 'ICMS due to the UF of destination of the product'
+          example: 34440.33
+        TIPOFRETE:
+          type: string
+          maxLength: 1
+          description: 'Type of shipping'
+          example: '2'
+        CNPJFRETE:
+          type: string
+          maxLength: 14
+          description: 'Cnpj of the carrier indicated on the invoice'
+          example: '26090286000137'
+        UFFRETE:
+          type: string
+          maxLength: 14
+          description: 'UF of the carrier indicated on the invoice'
+          example: 'PE'
+        PLACA1:
+          type: string
+          maxLength: 7
+          description: 'License plate of the vehicle used to transport the product'
+          example: 'ABC1111'
+        PLACA2:
+          type: string
+          maxLength: 7
+          description: 'License plate of the vehicle used to transport the product'
+          example: 'ABC1111'
+        PLACA3:
+          type: string
+          maxLength: 7
+          description: 'License plate of the vehicle used to transport the product'
+          example: 'ABC1111'
+        DESTINACAO:
+          type: string
+          maxLength: 1
+          description: 'CFOP description of the invoice'
+          example: '2'
+
+    TBA2Q2H:
+      type: object
+      description: 'Data model used by type II annexes'
+      properties:
+        CNPJH:
+          type: string
+          maxLength: 14
+          description: 'CNPJ of the company of origin.'
+          example: '26090286000137'
+        IEH:
+          type: string
+          maxLength: 14
+          description: 'State registration of the company of origin.'
+          example: '016122778'
+        UFH:
+          type: string
+          maxLength: 2
+          description: 'State of the company of origin.'
+          example: 'PB'
+        MESANO:
+          type: string
+          maxLength: 6
+          description: 'Identifier of the month and year of registration.'
+          example: '012021'
+        ID:
+          type: string
+          maxLength: 3
+          description: 'Identifier of registration.'
+          example: '006'
+        CNPJ:
+          type: string
+          maxLength: 14
+          description: 'Cnpj of the recipient company.'
+          example: '26090286000137'
+        IE:
+          type: string
+          maxLength: 14
+          description: 'State registration of the recipient company.'
+          example: '016122778'
+        IEST:
+          type: string
+          maxLength: 14
+          description: 'IEST of the recipient company.'
+          example: '016122778'
+        RAZSOCIAL:
+          type: string
+          maxLength: 60
+          description: 'Business name of the recipient of the transaction.'
+          example: 'Distribuidora de Combustíveis S/A'
+        ENDERECO:
+          type: string
+          maxLength: 14
+          description: 'Address of the recipient of the transaction.'
+          example: 'Rua do Comercio SN'
+        BAIRRO:
+          type: string
+          maxLength: 14
+          description: 'Neighborhood of the recipient of the operation.'
+          example: 'Centro'
+        MUNICIPIO:
+          type: string
+          maxLength: 14
+          description: 'Municipality of the recipient of the operation.'
+          example: 'Campina Grande'
+        UF:
+          type: string
+          maxLength: 2
+          description: 'State of the recipient of the transaction'
+          example: 'PB'
+        CEP:
+          type: string
+          maxLength: 14
+          description: 'Zip code of the recipient of the transaction.'
+          example: '58414040'
+
+    TBA4Q2D:
+      type: object
+      description: 'Data model used by type IV annexes'
+      properties:
+        CNPJH:
+          type: string
+          maxLength: 14
+          description: 'CNPJ of the company of origin.'
+          example: '26090286000137'
+        IEH:
+          type: string
+          maxLength: 14
+          description: 'State registration of the company of origin.'
+          example: '016122778'
+        UFH:
+          type: string
+          maxLength: 2
+          description: 'State of the company of origin.'
+          example: 'PB'
+        MESANO:
+          type: string
+          maxLength: 6
+          description: 'Identifier of the month and year of registration.'
+          example: '012021'
+        ID:
+          type: string
+          maxLength: 3
+          description: 'Identifier of registration.'
+          example: '006'
+        CNPJ:
+          type: string
+          maxLength: 14
+          description: 'Cnpj of the recipient company.'
+          example: '26090286000137'
+        IE:
+          type: string
+          maxLength: 14
+          description: 'State registration of the recipient company.'
+          example: '016122778'
+        UF:
+          type: string
+          maxLength: 2
+          description: 'State of the recipient company.'
+          example: 'PB'
+        DTEMISSAO:
+          type: string
+          format: date-time
+          description: 'Annex issue date.'
+          example: '2021-01-18T03:00:00.000Z'
+        MODELO:
+          type: string
+          maxLength: 2
+          description: 'Invoice template used.'
+          example: '55'
+        SERIE:
+          type: string
+          maxLength: 3
+          description: 'Invoice serie'
+          example: '3'
+        NUMNF:
+          type: string
+          maxLength: 9
+          description: 'Invoice identifier number'
+          example: '000113265'
+        CFOP:
+          type: string
+          maxLength: 4
+          description: 'Tax code of operations and services.'
+          example: '6659'
+        QTD:
+          type: number
+          description: 'Amount of fuel'
+          example: 45614
+        VLRUNIT:
+          type: number
+          description: 'Unitary value'
+          example: 28634
+        VLROPE:
+          type: number
+          description: 'Transaction value'
+          example: 130440.09
+        VLRBCST:
+          type: number
+          description: 'Tax substitution calculation basis'
+          example: 191335.18
+        ALIQICMS:
+          type: number
+          description: 'Internal rate of product destination'
+          example: 18
+        VLRICMSST:
+          type: number
+          description: 'ICMS due to the UF of destination of the product'
+          example: 34440.33
+        TIPOFRETE:
+          type: string
+          maxLength: 1
+          description: 'Type of shipping'
+          example: '2'
+        CNPJFRETE:
+          type: string
+          maxLength: 14
+          description: 'Cnpj of the carrier indicated on the invoice'
+          example: '26090286000137'
+        UFFRETE:
+          type: string
+          maxLength: 14
+          description: 'UF of the carrier indicated on the invoice'
+          example: 'PE'
+        PLACA1:
+          type: string
+          maxLength: 7
+          description: 'License plate of the vehicle used to transport the product'
+          example: 'ABC1111'
+        PLACA2:
+          type: string
+          maxLength: 7
+          description: 'License plate of the vehicle used to transport the product'
+          example: 'ABC1111'
+        PLACA3:
+          type: string
+          maxLength: 7
+          description: 'License plate of the vehicle used to transport the product'
+          example: 'ABC1111'
+
+    TBA4Q2H:
+      type: object
+      description: 'Data model used by type IV annexes'
+      properties:
+        CNPJH:
+          type: string
+          maxLength: 14
+          description: 'CNPJ of the company of origin.'
+          example: '26090286000137'
+        IEH:
+          type: string
+          maxLength: 14
+          description: 'State registration of the company of origin.'
+          example: '016122778'
+        UFH:
+          type: string
+          maxLength: 2
+          description: 'State of the company of origin.'
+          example: 'PB'
+        MESANO:
+          type: string
+          maxLength: 6
+          description: 'Identifier of the month and year of registration.'
+          example: '012021'
+        ID:
+          type: string
+          maxLength: 3
+          description: 'Identifier of registration.'
+          example: '006'
+        CNPJ:
+          type: string
+          maxLength: 14
+          description: 'Cnpj of the recipient company.'
+          example: '26090286000137'
+        IE:
+          type: string
+          maxLength: 14
+          description: 'State registration of the recipient company.'
+          example: '016122778'
+        RAZSOCIAL:
+          type: string
+          maxLength: 60
+          description: 'Business name of the recipient of the transaction.'
+          example: 'Distribuidora de Combustíveis S/A'
+        ENDERECO:
+          type: string
+          maxLength: 60
+          description: 'Address of the recipient of the transaction.'
+          example: 'Rua do Comercio SN'
+        BAIRRO:
+          type: string
+          maxLength: 30
+          description: 'Neighborhood of the recipient of the operation.'
+          example: 'Centro'
+        MUNICIPIO:
+          type: string
+          maxLength: 40
+          description: 'Municipality of the recipient of the operation.'
+          example: 'Campina Grande'
+        UF:
+          type: string
+          maxLength: 2
+          description: 'State of the recipient of the transaction'
+          example: 'PB'
+        CEP:
+          type: string
+          maxLength: 14
+          description: 'Zip code of the recipient of the transaction.'
+          example: '58414040'
+
+    ANNEXSUMARRY:
+      type: object
+      description: 'Data model used in the summary resulting from annexes'
+      properties:
+        RAZAOSOCIALEMITENTE:
+          type: string
+          maxLength: 14
+          description: 'Corporate name of the issuing company.'
+          example: 'Distribuidora de Combustíveis S/A.'
+        CNPJEMITENTE:
+          type: string
+          maxLength: 14
+          description: 'CNPJ of the issuing company.'
+          example: '26090286000137'
+        UFEMITENTE:
+          type: string
+          maxLength: 2
+          description: 'State of the issuing company.'
+          example: 'PB'
+        MESANO:
+          type: string
+          maxLength: 6
+          description: 'Identifier of the month and year of registration.'
+          example: '012021'
+        PRODUTO:
+          type: string
+          maxLength: 3
+          enum: [ "AEA","B00","DSL", "DSM","GLN","GLP","GPN", "GSL", "GSP", "OCB", "QAV", "S10" ]
+          description: 'Type of fuel'
+          example: 'S10'
+        QTD:
+          type: number
+          description: ''
+          example: 1310000
+        VLICMSST:
+          type: number
+          description: ''
+          example: 982098.59
+
+    NFE:
+      type: object
+      description: 'Data model used in electronic invoices'
+      properties:
+        NRCHAVEACESSO:
+          type: string
+          maxLength: 44
+          description: 'Invoice access key'
+          example: '25210101241994000958550030000941441412662348'
+        NRNELETRONICA:
+          type: string
+          maxLength: 6
+          description: 'Invoice number'
+          example: '160012'
+        DHEMISSAO:
+          type: string
+          format: data-time
+          description: 'Date and time of invoice issuance.'
+          example: '2021-09-29T12:33:07.000Z'
+        RAZAOSOCIALEMITENTE:
+          type: string
+          description: ''
+          example: 'Distribuidora de Combustíveis S/A'
+        CNPJEMITENTE:
+          type: string
+          description: ''
+          example: '41080722000180'
+        UFEMITENTE:
+          type: string
+          description: ''
+          example: 'PB'
+        RAZAOSOCIALDESTINATARIO:
+          type: string
+          description: ''
+          example: 'Distribuidora de Combustíveis S/A'
+        CNPJDESTINATARIO:
+          type: string
+          description: ''
+          example: '41080722000180'
+        UFDESTINATARIO:
+          type: string
+          description: ''
+          example: 'PB'
+        CDPRODUTO:
+          type: string
+          description: 'Invoice product code.'
+          example: '1000001'
+        DSPRODUTO:
+          type: string
+          description: 'Product description of the invoice.'
+          example: 'GASOLINA C ADITIVADA'
+        CDNCM:
+          type: string
+          description: 'Mercosur Common Nomenclature Code - NCM'
+          example: '27101259'
+        CDANP:
+          type: string
+          description: ''
+          example: '27101259'
+        CST:
+          type: string
+          description: ''
+          example: '27101259'
+        CFOP:
+          type: string
+          description: ''
+          example: '27101259'
+        QTPRODUTO:
+          type: number
+          description: 'Total amount of invoice product.'
+          example: 3000
+        VLUNITARIO:
+          type: number
+          description: ''
+          example: 2.82
+        VLPRODUTO:
+          type: number
+          description: ''
+          example: 124164.96
+        VLTOTALNOTA:
+          type: number
+          description: 'Total invoice amount.'
+          example: 9765.68
+
+        DHINCLUSAO:
+          type: string
+          format: data-time
+          description: 'Invoice inclusion date and time.'
+          example: '2021-09-29T12:33:07.000Z'
+        DHRECEBIMENTO:
+          type: string
+          format: data-time
+          description: 'Date and time of receipt of invoice.'
+          example: '2021-09-29T12:33:07.000Z'
+        DHOPERACAO:
+          type: string
+          format: data-time
+          description: 'Invoice operation date and time.'
+          example: '2021-09-29T12:33:07.000Z'
+
+        NONATOPERACAO:
+          type: string
+          description: 'Description of the invoice operation.'
+          example: 'Venda combust/lubrif adquir ou rec terc dest comercialização'
+        VLBASECALCULO:
+          type: number
+          description: 'Value of the tax base of the invoice product.'
+          example: 9765.68
+        VLBASECALCICMS:
+          type: number
+          description: 'Value of the ICMS tax base resulting from the invoice.'
+          example: 9765.68
+        VLBASECALCICMSST:
+          type: number
+          description: 'Value of the calculation base of ICMS tax substitution resulting from the invoice.'
+          example: 9765.68
+
+        VLBCSTRETDEST:
+          type: number
+          description: ''
+          example: 224777.50
+        VLICMSSTRETDEST:
+          type: number
+          description: ''
+          example: 6518.48
+
+    ERROR:
+      type: object
+      description: >-
+        Default template for error message. All returned errors will followthis template.
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          description: >-
+            Unique API code that indicates specific details of the error, or
+            the actual status code of the response when the unique code is not
+            appropriate.
+        message:
+          type: string
+          description: Readable and short description of the error.
+        description:
+          type: string
+          description: Detailed description of the error.
+
+    MULTISTATUS:
+      type: object
+      description: Default template for message when a request returns multiple status.
+      required:
+        - success
+        - error
+      properties:
+        success:
+          type: array
+          description: All items that were processed successfully.
+          items:
+            type: object
+            description: Item data processed.
+            oneOf:
+              - $ref: '#/components/schemas/TBHEADER'
+              - $ref: '#/components/schemas/TBA2Q2D'
+              - $ref: '#/components/schemas/TBA2Q2H'
+              - $ref: '#/components/schemas/TBA4Q2D'
+              - $ref: '#/components/schemas/TBA4Q2H'
+              - $ref: '#/components/schemas/NFE'
+        error:
+          type: array
+          description: All items that were were not processed due to some error.
+          items:
+            type: object
+            description: Item data not processed.
+            properties:
+              code:
+                type: integer
+                description: The requisition status code for the item.
+              message:
+                type: string
+                description: Readable and short description of the error.
+              description:
+                type: string
+                description: Detailed description of the error.
+              item:
+                type: object
+                description: Item data that was not successfully processed
+                oneOf:
+                  - $ref: '#/components/schemas/TBHEADER'
+                  - $ref: '#/components/schemas/TBA2Q2D'
+                  - $ref: '#/components/schemas/TBA2Q2H'
+                  - $ref: '#/components/schemas/TBA4Q2D'
+                  - $ref: '#/components/schemas/TBA4Q2H'
+                  - $ref: '#/components/schemas/NFE'
+
+  parameters:
+    fieldsParam:
+      in: query
+      name: fields
+      required: false
+      description: >-
+        Allows you to retrieve only the information you want. To do this, 
+        simply provide the name of the attributes separated by commas. 
+        For example: **_fields=field1,field2_** indicates that only 
+        field1 and field2 should be listed in the query result.
+      schema:
+        type: array
+        items:
+          type: string
+    pageParam:
+      in: query
+      name: page
+      required: false
+      description: The page number.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 1
+    limitParam:
+      in: query
+      name: limit
+      required: false
+      description: The number of items to return.
+      schema:
+        type: integer
+        format: int32
+        maximum: 100
+        default: 20
+    sortParam:
+      in: query
+      name: sort
+      required: false
+      description: >-
+        Contains the names of the attributes, separated by commas, that
+        will be used to sort the result of the query. For ascending sort,
+        use the '+' character before the attribute name. For descending 
+        sort, use the '-' character before the attribute name. By default,
+        the order is ascending, so the '+' symbol is optional, just enter
+        the attribute.
+      schema:
+        type: array
+        items:
+          type: string
+        default:
+          - created_at
+    filterParam:
+      in: query
+      name: filter
+      schema:
+        type: object
+      style: form
+      explode: true
+      description: >-
+        To filter a collection by multiple concurrent attributes or filter 
+        multiple values for an attribute, simply use the attribute/property
+        name with an equal sign and the expected values (separated by a comma). **_property=value1,value2,value3_**. The query is not case sensitive.
+        Example: **_?type=direct_administration_** to retrieve exactly the items with direct_administration type.
+        For filtering with logical operators, just follow the syntax:
+        **_property=operator:value_**. The available operators are:
+         - **gt** -> Defines the value of the attribute is greater than 
+                    (that is, >) the specified value.
+         - **gte** -> Defines the attribute value is greater than or equal to
+                    (that is, >=) the specified value.
+         - **lt** -> Define the value of the attribute to be less than (that is, <)
+                    the specified value.
+         - **lte** -> Defines the value of the attribute is less than or equal to 
+                    (that is, <=) the specified value.
+
+        Example: **_?value=gte:800&value=lt:1200_** to recover the items with value greater than or equal to 800 and less then 1200.
+    dateStartParam:
+      in: query
+      name: date_start
+      required: false
+      description: >-
+        Define start date in format: YYYY-MM-DD ou YYYY-MM-DD hh:mm:ss. The
+        attribute used for the query will be the registration_date.
+      schema:
+        type: string
+    dateEndParam:
+      in: query
+      name: date_end
+      required: false
+      description: >-
+        Define end date in format: YYYY-MM-DD ou YYYY-MM-DD hh:mm:ss.The
+        attribute used for the query will be the registration_date. 
+      schema:
+        type: string
+        default: today
+    periodParam:
+      in: query
+      name: period
+      required: false
+      description: |-
+        Sets the period from the available ones:
+         - **[1..n]d** - Total days (1d, 2d, ...)
+         - **[1..n]w** - Total of weeks (1w, 2w, ...)
+         - **[1..n]m** - Total of months (1m, 2m, ...)
+         - **[1..n]y** - Total of years (1y, 2y, ...)
+        The attribute used for the query will be the registration_date.
+      schema:
+        type: string
+
+  responses:
+    204:
+      description: >-
+        Operation performed successfully. There is no data to be returned
+    400:
+      description: >-
+        Request can not be met, syntactically incorrect or violates the
+        schema. Normally it occurs due to validation issues, such as fields
+        that are expected in the request body and not passed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ERROR'
+    401:
+      description: >-
+        Authentication failed due to invalid authentication credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ERROR'
+    403:
+      description: >-
+        User does not have scope to access this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ERROR'
+    404:
+      description: >-
+        Specified resource does not exist. Usually when the URI is incorrect
+        or the resource is not found, or even no longer exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ERROR'
+    406:
+      description: >-
+        The server is not implementing the media type requested by the
+        client for the application response. Only application/json is
+        currently accepted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ERROR'
+    409:
+      description: >-
+        Conflicts have probably occurred with data that can not be duplicated.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ERROR'
+    415:
+      description: >-
+        The server does not support the requested payload format. Only 
+        application/json is accepted.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ERROR'
+    429:
+      description: >-
+        The rate limit for requests exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ERROR'
+    500:
+      description: >-
+        An internal server error occurred. Although the client appears to
+        provide a correct request, the server encountered an unexpected
+        condition that prevented it from responding to the request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ERROR'
