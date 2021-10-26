@@ -28,7 +28,7 @@ export class MonthYearValidator {
         }
 
         // Check if the year has a valid value
-        const year = parseInt(monthYear.substr(3, 4), 10)
+        const year = parseInt(monthYear.substr(2, 4), 10)
         if (year < 1678 || year > 3000) {
             throw new ValidationException(
                 Strings.ERROR_MESSAGE.DATE.YEAR_NOT_ALLOWED.MESSAGE.replace('{0}', monthYear),

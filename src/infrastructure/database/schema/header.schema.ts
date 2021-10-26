@@ -33,7 +33,8 @@ const schema: any = {
     local: String,
     date: String,
     hour: String,
-    annex_origin: String
+    annex_origin: String,
+    sha512: String
 }
 
 const options: any = {

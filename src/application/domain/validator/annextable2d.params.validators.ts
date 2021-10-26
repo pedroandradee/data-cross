@@ -3,7 +3,7 @@ import { TextFieldsValidator } from './text.fields.validator'
 
 export class Annex2DParamsValidators {
     public static validate_cnpj_issuer(name: string): void | ValidationException {
-        TextFieldsValidator.validateStringIsNumberField(name, 14, 'CNPJ Issuer')
+        TextFieldsValidator.validateStringIsNumberFieldExactlyLength(name, 14, 'CNPJ Issuer')
     }
 
     // public static validate_ie_issuer(name: string): void | ValidationException {
@@ -19,11 +19,11 @@ export class Annex2DParamsValidators {
     }
 
     public static validate_identifier(name: string): void | ValidationException {
-        TextFieldsValidator.validateStringIsNumberField(name, 3, 'Identifier')
+        TextFieldsValidator.validateStringIsNumberFieldExactlyLength(name, 3, 'Identifier')
     }
 
     public static validate_cnpj(name: string): void | ValidationException {
-        TextFieldsValidator.validateStringIsNumberField(name, 14, 'CNPJ')
+        TextFieldsValidator.validateStringIsNumberFieldExactlyLength(name, 14, 'CNPJ')
     }
 
     // public static validate_ie(name: string): void | ValidationException {
@@ -51,11 +51,11 @@ export class Annex2DParamsValidators {
     // }
 
     public static validate_cfop(password: string): void | ValidationException {
-        TextFieldsValidator.validateStringIsNumberField(password, 4, 'CFOP')
+        TextFieldsValidator.validateStringIsNumberFieldExactlyLength(password, 4, 'CFOP')
     }
 
     public static validate_nfe_product(password: string): void | ValidationException {
-        TextFieldsValidator.validateStringIsNumberField(password, 5, 'NFE Product')
+        TextFieldsValidator.validateStringIsNumberFieldExactlyLength(password, 5, 'NFE Product')
     }
 
     // public static validate_icms_st_value(password: string): void | ValidationException {
@@ -63,11 +63,11 @@ export class Annex2DParamsValidators {
     // }
 
     public static validate_shipping_type(password: string): void | ValidationException {
-        TextFieldsValidator.validateStringIsNumberField(password, 1, 'Shipping Type')
+        TextFieldsValidator.validateStringIsNumberFieldExactlyLength(password, 1, 'Shipping Type')
     }
 
     public static validate_cnpj_freight(password: string): void | ValidationException {
-        TextFieldsValidator.validateStringIsNumberField(password, 14, 'CNPJ Freight')
+        TextFieldsValidator.validateStringIsNumberFieldExactlyLength(password, 14, 'CNPJ Freight')
     }
 
     // public static validate_state_freight(password: string): void | ValidationException {

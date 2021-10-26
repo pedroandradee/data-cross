@@ -414,6 +414,9 @@ export default class Header extends Entity implements IJSONSerializable, IJSONDe
         if (json.annex_origin !== undefined) {
             this.annex_origin = json.annex_origin
         }
+        if (json.sha512 !== undefined) {
+            this.sha512 = json.sha512
+        }
 
         return this
     }

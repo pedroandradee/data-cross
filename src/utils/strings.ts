@@ -1,4 +1,8 @@
 import { MONTHS } from '../application/domain/validator/month.year'
+import { ANNEX_ALLOWED } from '../application/domain/validator/annex'
+import { HEADER_PRODUCTS_ALLOWED } from '../application/domain/validator/header.product'
+import { STATE_ALLOWED } from '../application/domain/validator/state'
+import { CATEGORY_ALLOWED } from '../application/domain/validator/header.category'
 
 /**
  * Class that defines variables with default values.
@@ -80,6 +84,72 @@ export abstract class Strings {
             INVALID_MONTH_YEAR_FORMAT: {
                 MESSAGE: 'Month year: {0}, is not in valid format.',
                 DESCRIPTION: 'Month year must follow MMyyyy format.'
+            }
+        },
+        HOUR: {
+            INVALID_FORMAT: {
+                MESSAGE: 'Hour: {0}, is not in valid ISO 8601 format.',
+                DESCRIPTION: `Hour must be in the format: hh:mm:ss`
+            },
+            HOUR_NOT_ALLOWED: {
+                MESSAGE: 'Hour {0} has hour not allowed.',
+                DESCRIPTION: `The hour must be greater than 0 and less than 24.`
+            },
+            MINUTE_NOT_ALLOWED: {
+                MESSAGE: 'Hour {0} has hour not allowed.',
+                DESCRIPTION: `The minutes must be greater than 0 and less than 60.`
+            },
+            SECOND_NOT_ALLOWED: {
+                MESSAGE: 'Hour {0} has hour not allowed.',
+                DESCRIPTION: `The seconds must be greater than 0 and less than 60.`
+            }
+        },
+        IDENTIFIER: {
+            INVALID_FORMAT: {
+                MESSAGE: 'Identifier: {0}, is not in valid format.',
+                DESCRIPTION: 'The identifier must follow the format ddd, where d is a digit between [0-9].'
+            }
+        },
+        ANNEX: {
+            INVALID_VALUE: {
+                MESSAGE: 'Annex: {0}, is not in valid value.',
+                DESCRIPTION: `The annex must have one of the allowed values, they are: ${ANNEX_ALLOWED.join(',')}`
+            }
+        },
+        HEADER_PRODUCT: {
+            INVALID_VALUE: {
+                MESSAGE: 'Product: {0}, is not in valid value.',
+                DESCRIPTION: `The product must have one of the allowed values, they are: ${HEADER_PRODUCTS_ALLOWED.join(',')}`
+            }
+        },
+        STATE: {
+            INVALID_VALUE: {
+                MESSAGE: '{0}: {1}, is not in valid value.',
+                DESCRIPTION: `The {0} must have one of the allowed values, they are: ${STATE_ALLOWED.join(',')}`
+            }
+        },
+        CNPJ: {
+            INVALID_VALUE: {
+                MESSAGE: '{0}: {1}, is not in valid value.',
+                DESCRIPTION: `The {0} must follow the format ^\d{14}$ , where d is a digit between [0-9].`
+            }
+        },
+        IE: {
+            INVALID_VALUE: {
+                MESSAGE: '{0}: {1}, is not in valid value.',
+                DESCRIPTION: `The {0} must follow the format ^\d{0,14}$ or 'ISENTO' , where d is a digit between [0-9].`
+            }
+        },
+        ZIP_CODE: {
+            INVALID_FORMAT: {
+                MESSAGE: 'Zip Code: {0}, is not in valid format.',
+                DESCRIPTION: 'The zip_code must follow the format ^\d{8}$, where d is a digit between [0-9].'
+            }
+        },
+        CATEGORY: {
+            INVALID_VALUE: {
+                MESSAGE: 'Category: {0}, is not in valid value.',
+                DESCRIPTION: `The category must have one of the allowed values, they are: ${CATEGORY_ALLOWED.join(',')}`
             }
         }
     }

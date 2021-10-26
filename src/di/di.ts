@@ -38,6 +38,7 @@ import { HeaderEntity } from '../infrastructure/entity/header'
 import { HeaderRepoModel } from '../infrastructure/database/schema/header.schema'
 import { IRepository } from '../application/port/repository.interface'
 import { HeaderRepository } from '../infrastructure/repository/header.repository'
+import { HeaderController } from '../ui/controllers/header.controller'
 
 class IoC {
     private readonly _container: Container
@@ -71,6 +72,7 @@ class IoC {
         this._container.bind(Identifier.APP).to(App).inSingletonScope()
 
         // Controllers
+        this._container.bind<HeaderController>(Identifier.HEADER_CONTROLLER).to(HeaderController).inSingletonScope()
         this._container.bind<HomeController>(Identifier.HOME_CONTROLLER).to(HomeController).inSingletonScope()
         this._container
             .bind<Annex2table2dController>(Identifier.ANNEX2TABLE2D_CONTROLLER)

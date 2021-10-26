@@ -7,6 +7,7 @@ import { IRepository } from '../port/repository.interface'
 import { ObjectIdValidator } from '../domain/validator/object.id.validator'
 import { ConflictException } from '../domain/exception/conflict.exception'
 import { Strings } from '../../utils/strings'
+import { CreateHeaderValidator } from '../domain/validator/create.header'
 
 @injectable()
 export class HeaderService implements IService<Header> {
@@ -19,11 +20,12 @@ export class HeaderService implements IService<Header> {
 
     public async add(item: Header): Promise<Header | undefined> {
         try {
-            // Create Validator
-
+            // Validate
+            CreateHeaderValidator.validate(item)
+            // Check exists
             const exists = await this._repository.checkExists(item)
             if (exists) throw new ConflictException(Strings.HEADER.ALREADY_REGISTERED)
-
+            // Save item
             const result: Header | undefined = await this._repository.create(item)
             return Promise.resolve(result)
         } catch (err) {
