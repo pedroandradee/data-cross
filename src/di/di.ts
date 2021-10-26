@@ -30,6 +30,14 @@ import { Annex2Table2hRepoModel } from '../infrastructure/database/schema/annex2
 import { Annex2Table2H } from '../application/domain/model/annex2table2h'
 import { Annex2Table2HEntity } from '../infrastructure/entity/annex2table2h'
 import { Annex2Table2HMapper } from '../infrastructure/entity/mapper/annex2table2h.mapper'
+import { IService } from '../application/port/service.interface'
+import Header from '../application/domain/model/header'
+import { HeaderService } from '../application/service/header.service'
+import { HeaderMapper } from '../infrastructure/entity/mapper/header.mapper'
+import { HeaderEntity } from '../infrastructure/entity/header'
+import { HeaderRepoModel } from '../infrastructure/database/schema/header.schema'
+import { IRepository } from '../application/port/repository.interface'
+import { HeaderRepository } from '../infrastructure/repository/header.repository'
 
 class IoC {
     private readonly _container: Container
@@ -73,6 +81,9 @@ class IoC {
 
         // Services
         this._container
+            .bind<IService<Header>>(Identifier.HEADER_SERVICE)
+            .to(HeaderService).inSingletonScope()
+        this._container
             .bind<IAnnex2Table2DService>(Identifier.ANNEX2TABLE2D_SERVICE)
             .to(Annex2Table2DService).inSingletonScope()
         this._container
@@ -81,6 +92,9 @@ class IoC {
 
         // Repositories
         this._container
+            .bind<IRepository<Header>>(Identifier.HEADER_REPOSITORY)
+            .to(HeaderRepository).inSingletonScope()
+        this._container
             .bind<IAnnex2Table2DRepository>(Identifier.ANNEX2TABLE2D_REPOSITORY)
             .to(Annex2Table2DRepository).inSingletonScope()
         this._container
@@ -88,10 +102,14 @@ class IoC {
             .to(Annex2Table2HRepository).inSingletonScope()
 
         // Models
+        this._container.bind(Identifier.HEADER_REPO_MODEL).toConstantValue(HeaderRepoModel)
         this._container.bind(Identifier.ANNEX2TABLE2D_REPO_MODEL).toConstantValue(Annex2Table2dRepoModel)
         this._container.bind(Identifier.ANNEX2TABLE2H_REPO_MODEL).toConstantValue(Annex2Table2hRepoModel)
 
         // Mappers
+        this._container
+            .bind<IEntityMapper<Header, HeaderEntity>>(Identifier.HEADER_MAPPER)
+            .to(HeaderMapper).inSingletonScope()
         this._container
             .bind<IEntityMapper<Annex2Table2D, Annex2Table2DEntity>>(Identifier.ANNEX2TABLE2D_MAPPER)
             .to(Annex2Table2DMapper).inSingletonScope()

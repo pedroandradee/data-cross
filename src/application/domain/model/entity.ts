@@ -40,5 +40,15 @@ export abstract class Entity {
         this._updated_at = value
     }
 
+    /**
+     * Concatenate field values into a single string
+     */
+    public concatToString(): string {
+        return Object
+            .keys(this)
+            .map(key => this[key].toString().replace(/ /g, ''))
+            .join('')
+    }
+
 }
 

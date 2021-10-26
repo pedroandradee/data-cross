@@ -1,3 +1,5 @@
+import { MONTHS } from '../application/domain/validator/month.year'
+
 /**
  * Class that defines variables with default values.
  *
@@ -15,6 +17,12 @@ export abstract class Strings {
 
     public static readonly PARAMETERS: any = {
         COULD_NOT_BE_UPDATED: 'Some fields could not be updated...'
+    }
+
+    public static readonly HEADER: any = {
+        ALREADY_REGISTERED: 'A header already registered!',
+        NOT_FOUND: 'Header not found!',
+        NOT_FOUND_DESCRIPTION: 'Header not found or already removed. A new operation for the same resource is required!'
     }
 
     public static readonly ANNEX2TABLE2D: any = {
@@ -60,5 +68,19 @@ export abstract class Strings {
             IMAGE_FORMAT_DESC: 'The image format must be jpg, jpeg or png.',
             IMAGE_SIZE_TOO_LARGE: 'The image size must be equal to or less than 500kb.'
         },
+        DATE: {
+            YEAR_NOT_ALLOWED: {
+                MESSAGE: 'Date {0} has year not allowed.',
+                DESCRIPTION: `The year must be greater than 1678 and less than 3000.`
+            },
+            MONTH_NOT_ALLOWED: {
+                MESSAGE: 'Month year {0} has month not allowed.',
+                DESCRIPTION: `The month must be a value between ${MONTHS.join(', ')}`
+            },
+            INVALID_MONTH_YEAR_FORMAT: {
+                MESSAGE: 'Month year: {0}, is not in valid format.',
+                DESCRIPTION: 'Month year must follow MMyyyy format.'
+            }
+        }
     }
 }
