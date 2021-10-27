@@ -1,15 +1,13 @@
 import { inject, injectable } from 'inversify'
 import { Identifier } from '../../di/identifiers'
 import { IQuery } from '../port/query.interface'
-/* TODO: Descomentar depois do merge
-import { ConflictException } from '../domain/exception/conflict.exception'
-import { Strings } from '../../utils/strings'
-*/
 import { ObjectIdValidator } from '../domain/validator/object.id.validator'
 import { IAliquotService } from '../port/aliquot.service'
 import { Aliquot } from '../domain/model/aliquot'
 import { AliquotValidator } from '../domain/validator/create.aliquot.validator'
 import { IAliquotRepository } from '../port/aliquot.repository'
+import { ConflictException } from 'application/domain/exception/conflict.exception'
+import { Strings } from 'utils/strings'
 
 @injectable()
 export class AliquotService implements IAliquotService {
@@ -22,10 +20,8 @@ export class AliquotService implements IAliquotService {
     public async add(item: Aliquot): Promise<Aliquot | undefined> {
         AliquotValidator.validate(item)
 
-        /* TODO: Descomentar depois do merge.
         const exists = await this._repository.checkExists(item)
-        if (exists) throw new ConflictException(Strings.Strings.StringsException('Aliquot').ALREADY_REGISTERED)
-        */
+        if (exists) throw new ConflictException(Strings.stringsException('Aliquot').ALREADY_REGISTERED)
 
         return this._repository.create(item)
     }
@@ -43,10 +39,8 @@ export class AliquotService implements IAliquotService {
     public async update(item: Aliquot): Promise<Aliquot | undefined> {
         AliquotValidator.validate(item)
 
-        /* TODO: Descomentar depois do merge
         const exists: boolean = await this._repository.checkExists(item)
         if (!exists) return Promise.resolve(undefined)
-        */
 
         return this._repository.update(item)
     }

@@ -1,5 +1,7 @@
 import { ValidationException } from '../exception/validation.exception'
 import { Standard } from '../model/standard'
+import { DateValidator } from './date'
+import { StateValidator } from './state'
 import { TextFieldsValidator } from './text.fields.validator'
 import { YearValidator } from './year'
 
@@ -16,10 +18,14 @@ export class StandardValidator {
         if (!item.year) fields.push('year')
         else YearValidator.validate(item.year)
 
-        // TODO: Adicionar os validadores após o merge
         if (!item.state) fields.push('state')
+        else StateValidator.validate('state', item.state)
+
         if (!item.start_date) fields.push('start_date')
+        else DateValidator.validate(item.start_date)
+
         if (!item.end_date) fields.push('end_date')
+        else DateValidator.validate(item.end_date)
 
         if (!item.value) fields.push('value')
         else TextFieldsValidator.validateNumberField(item.value, 'value')

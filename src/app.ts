@@ -16,7 +16,6 @@ import { Strings } from './utils/strings'
 import { DIContainer } from './di/di'
 import yaml from 'yamljs'
 
-
 /**
  * Implementation of class App.
  * You must initialize all application settings,
@@ -99,8 +98,8 @@ export class App {
 
             app.use(morgan(':remote-addr :remote-user ":method :url HTTP/:http-version" ' +
                 ':status :res[content-length] :response-time ms ":referrer" ":user-agent"', {
-                    stream: { write: (str: string) => this._logger.info(str) }
-                }
+                stream: { write: (str: string) => this._logger.info(str) }
+            }
             ))
         })
         this.express.use(inversifyExpress.build())
