@@ -6,10 +6,11 @@ import { Identifier } from '../../di/identifiers'
 import { ApiExceptionManager } from '../exception/api.exception.manager'
 import { IQuery } from '../../application/port/query.interface'
 import { Query } from '../../infrastructure/repository/query/query'
-import { IService } from '../../application/port/service.interface'
 import Header from '../../application/domain/model/header'
 import { ApiException } from '../exception/api.exception'
 import { Strings } from '../../utils/strings'
+import { IHeaderService } from '../../application/port/header.service'
+import { MultiStatus } from '../../application/domain/model/multi.status'
 
 @controller('/v1/scanc/header')
 export class HeaderController {
@@ -29,20 +30,26 @@ export class HeaderController {
     }
 
     constructor(
-        @inject(Identifier.HEADER_SERVICE) private readonly _service: IService<Header>
+        @inject(Identifier.HEADER_SERVICE) private readonly _service: IHeaderService
     ) {
     }
 
     @httpPost('/')
     public async create(@request() req: Request, @response() res: Response): Promise<Response> {
         try {
-            // Remove read only fields
-            delete req.body.id
-            delete req.body.created_at
-            delete req.body.updated_at
-            const entity: Header = new Header().fromJSON(req.body)
-            const result: Header | undefined = await this._service.add(entity)
-            return res.status(HttpStatus.CREATED).send(this.toJSONView(result))
+            let items: Array<any> = req.body
+            if (!(req.body instanceof Array)) {
+                items = [req.body]
+            }
+            const entities: Array<Header> = items
+                .map(item => {
+                    // Remove read only fields
+                    delete item.id
+                    delete item.created_at
+                    return new Header().fromJSON(item)
+                })
+            const multiStatus: MultiStatus<Header> = await this._service.addMultiples(entities)
+            return res.status(HttpStatus.MULTI_STATUS).send(this.toJSONView(multiStatus))
         } catch (err) {
             return HeaderController.handlerError(res, err)
         }
@@ -77,10 +84,8 @@ export class HeaderController {
         }
     }
 
-    private toJSONView(entity: Header | Array<Header> | undefined): object {
+    private toJSONView(entity: Header | Array<Header> | MultiStatus<Header> | undefined): object {
         if (entity instanceof Array) return entity.map(item => this.toJSONView(item))
         return entity?.toJSON()
     }
-
-
 }
