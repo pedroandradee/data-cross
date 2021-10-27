@@ -1,9 +1,10 @@
 import { IJSONDeserializable } from '../utils/json.deserializable.interface'
 import { IJSONSerializable } from '../utils/json.serializable.interface'
 import { JsonUtils } from '../utils/json.utils'
+import { TypeStandard } from '../utils/standard.types'
 import { Entity } from './entity'
 
-export class Aliquot_PMPF extends Entity implements IJSONSerializable, IJSONDeserializable<Aliquot_PMPF> {
+export class Standard extends Entity implements IJSONSerializable, IJSONDeserializable<Standard> {
 
     private _standard?: string
     private _num?: string
@@ -11,7 +12,7 @@ export class Aliquot_PMPF extends Entity implements IJSONSerializable, IJSONDese
     private _state?: string
     private _start_date?: string
     private _end_date?: string
-    private _product?: string
+    private _type?: TypeStandard
     private _value?: number
 
     get standard(): string | undefined {
@@ -62,12 +63,12 @@ export class Aliquot_PMPF extends Entity implements IJSONSerializable, IJSONDese
         this._end_date = value
     }
 
-    get product(): string | undefined {
-        return this._product
+    get type(): TypeStandard | undefined {
+        return this._type
     }
 
-    set product(value: string | undefined) {
-        this._product = value
+    set type(value: TypeStandard | undefined) {
+        this._type = value
     }
 
     get value(): number | undefined {
@@ -78,8 +79,7 @@ export class Aliquot_PMPF extends Entity implements IJSONSerializable, IJSONDese
         this._value = value
     }
 
-
-    public fromJSON(json: any): Aliquot_PMPF {
+    public fromJSON(json: any): Standard {
         if (!json) return this
 
         if (typeof json === 'string' && JsonUtils.isJsonString(json)) {
@@ -92,13 +92,13 @@ export class Aliquot_PMPF extends Entity implements IJSONSerializable, IJSONDese
         if (json.state !== undefined) this.state = json.state
         if (json.start_date !== undefined) this.start_date = json.start_date
         if (json.end_date !== undefined) this.end_date = json.end_date
-        if (json.product !== undefined) this.product = json.product
+        if (json.type !== undefined) this.type = json.type
         if (json.value !== undefined) this.value = json.value
 
         return this
     }
 
-    toJSON(): any {
+    public toJSON(): any {
         return {
             standard: this.standard || undefined,
             num: this.num || undefined,
@@ -106,18 +106,8 @@ export class Aliquot_PMPF extends Entity implements IJSONSerializable, IJSONDese
             state: this.state || undefined,
             start_date: this.start_date || undefined,
             end_date: this.end_date || undefined,
-            product: this.product || undefined,
+            type: this.type || undefined,
             value: this.value || undefined
         }
     }
-
-
-
-
-
-
-
-
-
-
 }

@@ -30,6 +30,23 @@ import { Annex2Table2hRepoModel } from '../infrastructure/database/schema/annex2
 import { Annex2Table2H } from '../application/domain/model/annex2table2h'
 import { Annex2Table2HEntity } from '../infrastructure/entity/annex2table2h'
 import { Annex2Table2HMapper } from '../infrastructure/entity/mapper/annex2table2h.mapper'
+import { Standard } from '../infrastructure/database/schema/standard.schema'
+import { IAliquotRepository } from '../application/port/aliquot.repository'
+import { AliquotRepository } from '../infrastructure/repository/aliquot.repository'
+import { IPMPFRepository } from '../application/port/pmpf.repository'
+import { PMPFRepository } from '../infrastructure/repository/pmpf.repository'
+import { Aliquot as AliquotModel } from '../application/domain/model/aliquot'
+import { AliquotEntity } from '../infrastructure/entity/aliquot'
+import { AliquotMapper } from '../infrastructure/entity/mapper/aliquot.mapper'
+import { PMPF as PMPFModel } from '../application/domain/model/pmpf'
+import { PMPFEntity } from '../infrastructure/entity/pmpf'
+import { PMPFMapper } from '../infrastructure/entity/mapper/pmpf.mapper'
+import { IAliquotService } from '../application/port/aliquot.service'
+import { AliquotService } from '../application/service/aliquot.service'
+import { IPMPFService } from '../application/port/pmpf.service'
+import { PMPFService } from '../application/service/pmpf.service'
+import { AliquotController } from '../ui/controllers/aliquot.controller'
+import { PMPFController } from '../ui/controllers/pmpf.controller'
 
 class IoC {
     private readonly _container: Container
@@ -63,13 +80,21 @@ class IoC {
         this._container.bind(Identifier.APP).to(App).inSingletonScope()
 
         // Controllers
-        this._container.bind<HomeController>(Identifier.HOME_CONTROLLER).to(HomeController).inSingletonScope()
+        this._container
+            .bind<HomeController>(Identifier.HOME_CONTROLLER)
+            .to(HomeController).inSingletonScope()
         this._container
             .bind<Annex2table2dController>(Identifier.ANNEX2TABLE2D_CONTROLLER)
             .to(Annex2table2dController).inSingletonScope()
         this._container
             .bind<Annex2table2hController>(Identifier.ANNEX2TABLE2H_CONTROLLER)
             .to(Annex2table2hController).inSingletonScope()
+        this._container
+            .bind<AliquotController>(Identifier.ALIQUOT_CONTROLLER)
+            .to(AliquotController).inSingletonScope()
+        this._container
+            .bind<PMPFController>(Identifier.PMPF_CONTROLLER)
+            .to(PMPFController).inSingletonScope()
 
         // Services
         this._container
@@ -78,6 +103,12 @@ class IoC {
         this._container
             .bind<IAnnex2Table2HService>(Identifier.ANNEX2TABLE2H_SERVICE)
             .to(Annex2Table2HService).inSingletonScope()
+        this._container
+            .bind<IAliquotService>(Identifier.ALIQUOT_SERVICE)
+            .to(AliquotService).inSingletonScope()
+        this._container
+            .bind<IPMPFService>(Identifier.PMPF_SERVICE)
+            .to(PMPFService).inSingletonScope()
 
         // Repositories
         this._container
@@ -86,10 +117,18 @@ class IoC {
         this._container
             .bind<IAnnex2Table2HRepository>(Identifier.ANNEX2TABLE2H_REPOSITORY)
             .to(Annex2Table2HRepository).inSingletonScope()
+        this._container
+            .bind<IAliquotRepository>(Identifier.ALIQUOT_REPOSITORY)
+            .to(AliquotRepository).inSingletonScope()
+        this._container
+            .bind<IPMPFRepository>(Identifier.PMPF_REPOSITORY)
+            .to(PMPFRepository).inSingletonScope()
 
         // Models
         this._container.bind(Identifier.ANNEX2TABLE2D_REPO_MODEL).toConstantValue(Annex2Table2dRepoModel)
         this._container.bind(Identifier.ANNEX2TABLE2H_REPO_MODEL).toConstantValue(Annex2Table2hRepoModel)
+        this._container.bind(Identifier.ALIQUOT_MODEL).toConstantValue(Standard)
+        this._container.bind(Identifier.PMPF_MODEL).toConstantValue(Standard)
 
         // Mappers
         this._container
@@ -98,6 +137,12 @@ class IoC {
         this._container
             .bind<IEntityMapper<Annex2Table2H, Annex2Table2HEntity>>(Identifier.ANNEX2TABLE2H_MAPPER)
             .to(Annex2Table2HMapper).inSingletonScope()
+        this._container
+            .bind<IEntityMapper<AliquotModel, AliquotEntity>>(Identifier.ALIQUOT_MAPPER)
+            .to(AliquotMapper).inSingletonScope()
+        this._container
+            .bind<IEntityMapper<PMPFModel, PMPFEntity>>(Identifier.PMPF_MAPPER)
+            .to(PMPFMapper).inSingletonScope()
 
         // Background Services
         this._container

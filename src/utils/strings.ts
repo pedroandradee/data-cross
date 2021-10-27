@@ -60,5 +60,31 @@ export abstract class Strings {
             IMAGE_FORMAT_DESC: 'The image format must be jpg, jpeg or png.',
             IMAGE_SIZE_TOO_LARGE: 'The image size must be equal to or less than 500kb.'
         },
+        VALIDATE_YEAR: {
+            FORMAT: {
+                MESSAGE: 'Year: {0}, is not in valid ISO 8601 format.',
+                DESCRIPTION: 'Year must be in the format: yyyy.'
+            },
+            VALUE: {
+                MESSAGE: 'Year: {0}, is not in valid ISO 8601 format.',
+                DESCRIPTION: 'The value must be between 1678 and 2261.'
+            }
+        },
+        VALIDATE_PRODUCT: {
+            MESSAGE: '{0} is not a product type.',
+            DESCRIPTION: 'Options are {0}.'
+        }
+    }
+
+    /**
+     * @param param 
+     * @returns 
+     */
+    public static StringsException(param: string) {
+        return {
+            ALREADY_REGISTERED: `A ${param} already registered!`,
+            NOT_FOUND: `${param} not found!`,
+            NOT_FOUND_DESCRIPTION: `${param} not found or already removed. A new operation for the same resource is required!`
+        }
     }
 }

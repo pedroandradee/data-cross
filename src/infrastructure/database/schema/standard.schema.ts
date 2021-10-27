@@ -1,6 +1,6 @@
 import Mongoose from 'mongoose'
 
-interface IPMPF extends Mongoose.Document {
+interface IStandard extends Mongoose.Document {
 }
 
 const schema: any = {
@@ -11,7 +11,8 @@ const schema: any = {
     start_date: String,
     end_date: String,
     product: String,
-    value: Number
+    value: Number,
+    type: String
 }
 
 const options: any = {
@@ -25,4 +26,5 @@ const options: any = {
         }
     }
 }
-export const PMPF = Mongoose.model<IPMPF>('PMPF', new Mongoose.Schema(schema, options))
+
+export const Standard = Mongoose.model<IStandard>('standards', new Mongoose.Schema(schema, options))

@@ -28,7 +28,7 @@ export class TextFieldsValidator {
         }
     }
 
-    public static validateNumberField(text: number, field: number): void | ValidationException {
+    public static validateNumberField(text: number, field: string): void | ValidationException {
         if (typeof text !== 'number') {
             throw new ValidationException(Strings.ERROR_MESSAGE.VALIDATE.INVALID_FIELDS,
                 Strings.ERROR_MESSAGE.VALIDATE.INVALID_NUMBER.replace('{0}', field))
