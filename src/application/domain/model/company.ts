@@ -9,7 +9,7 @@ import { Entity } from './entity'
 import { IJSONSerializable } from '../utils/json.serializable.interface'
 import { IJSONDeserializable } from '../utils/json.deserializable.interface'
 
- export class Company extends Entity implements IJSONSerializable, IJSONDeserializable<Company> {
+export class Company extends Entity implements IJSONSerializable, IJSONDeserializable<Company> {
     private _corporate_name?: string
     private _cnpj?: string
     private _ie?: string
@@ -27,12 +27,12 @@ import { IJSONDeserializable } from '../utils/json.deserializable.interface'
     private _contact_rg?: string
     private _contact_state?: number
 
-    constructor(id?: string, created_at?: string, updated_at?: string, corporate_name?: string, cnpj?: string,
-            ie?: string, address?: string, district?: string, county?: string, state?: string, zip_code?: string,
-            email?: string, category?: string, phone?: string, contact?: string, contact_position?: string,
-            contact_cpf?: string, contact_rg?: string, contact_state?: number) {
+    constructor(id?: string, created_at?: string, corporate_name?: string, cnpj?: string,
+                ie?: string, address?: string, district?: string, county?: string, state?: string, zip_code?: string,
+                email?: string, category?: string, phone?: string, contact?: string, contact_position?: string,
+                contact_cpf?: string, contact_rg?: string, contact_state?: number) {
 
-        super(id, created_at, updated_at)
+        super(id, created_at)
 
         this._corporate_name = corporate_name
         this._cnpj = cnpj
@@ -208,26 +208,25 @@ import { IJSONDeserializable } from '../utils/json.deserializable.interface'
         return this
     }
 
-     public toJSON(): any {
+    public toJSON(): any {
         return {
-           id: super.id,
-           created_at: super.created_at,
-           updated_at: super.updated_at,
-           corporate_name: this.corporate_name,
-           ie: this.ie,
-           address: this.address,
-           district: this.district,
-           county: this.county,
-           state: this.state,
-           zip_code: this.zip_code,
-           email: this.email,
-           category: this.category,
-           phone: this.phone,
-           contact: this.contact,
-           contact_position: this.contact_position,
-           contact_cpf: this.contact_cpf,
-           contact_rg: this.contact_rg,
-           contact_state: this.contact_state
+            id: super.id,
+            created_at: super.created_at,
+            corporate_name: this.corporate_name,
+            ie: this.ie,
+            address: this.address,
+            district: this.district,
+            county: this.county,
+            state: this.state,
+            zip_code: this.zip_code,
+            email: this.email,
+            category: this.category,
+            phone: this.phone,
+            contact: this.contact,
+            contact_position: this.contact_position,
+            contact_cpf: this.contact_cpf,
+            contact_rg: this.contact_rg,
+            contact_state: this.contact_state
         }
     }
 }

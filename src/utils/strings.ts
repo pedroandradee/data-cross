@@ -1,3 +1,9 @@
+import { MONTHS } from '../application/domain/validator/month.year'
+import { ANNEX_ALLOWED } from '../application/domain/validator/annex'
+import { HEADER_PRODUCTS_ALLOWED } from '../application/domain/validator/header.product'
+import { STATE_ALLOWED } from '../application/domain/validator/state'
+import { CATEGORY_ALLOWED } from '../application/domain/validator/header.category'
+
 /**
  * Class that defines variables with default values.
  *
@@ -15,6 +21,18 @@ export abstract class Strings {
 
     public static readonly PARAMETERS: any = {
         COULD_NOT_BE_UPDATED: 'Some fields could not be updated...'
+    }
+
+    public static readonly HEADER: any = {
+        ALREADY_REGISTERED: 'A header already registered!',
+        NOT_FOUND: 'Header not found!',
+        NOT_FOUND_DESCRIPTION: 'Header not found or already removed. A new operation for the same resource is required!'
+    }
+
+    public static readonly PRODUCT: any = {
+        ALREADY_REGISTERED: 'A product already registered!',
+        NOT_FOUND: 'Product not found!',
+        NOT_FOUND_DESCRIPTION: 'Product not found or already removed. A new operation for the same resource is required!'
     }
 
     public static readonly ANNEX2TABLE2D: any = {
@@ -60,5 +78,95 @@ export abstract class Strings {
             IMAGE_FORMAT_DESC: 'The image format must be jpg, jpeg or png.',
             IMAGE_SIZE_TOO_LARGE: 'The image size must be equal to or less than 500kb.'
         },
+        DATE: {
+            YEAR_NOT_ALLOWED: {
+                MESSAGE: 'Date {0} has year not allowed.',
+                DESCRIPTION: `The year must be greater than 1678 and less than 3000.`
+            },
+            MONTH_NOT_ALLOWED: {
+                MESSAGE: 'Date {0} has month not allowed.',
+                DESCRIPTION: `The month must be a value between ${MONTHS.join(', ')}`
+            },
+            DAY_NOT_ALLOWED: {
+                MESSAGE: 'Date {0} has month not allowed.',
+                DESCRIPTION: `The day must be a value between {0}.`
+            },
+            INVALID_MONTH_YEAR_FORMAT: {
+                MESSAGE: 'Month year: {0}, is not in valid format.',
+                DESCRIPTION: 'Month year must follow MMyyyy format.'
+            }
+        },
+        HOUR: {
+            INVALID_FORMAT: {
+                MESSAGE: 'Hour: {0}, is not in valid ISO 8601 format.',
+                DESCRIPTION: `Hour must be in the format: hh:mm:ss`
+            },
+            HOUR_NOT_ALLOWED: {
+                MESSAGE: 'Hour {0} has hour not allowed.',
+                DESCRIPTION: `The hour must be greater than 0 and less than 24.`
+            },
+            MINUTE_NOT_ALLOWED: {
+                MESSAGE: 'Hour {0} has hour not allowed.',
+                DESCRIPTION: `The minutes must be greater than 0 and less than 60.`
+            },
+            SECOND_NOT_ALLOWED: {
+                MESSAGE: 'Hour {0} has hour not allowed.',
+                DESCRIPTION: `The seconds must be greater than 0 and less than 60.`
+            }
+        },
+        IDENTIFIER: {
+            INVALID_FORMAT: {
+                MESSAGE: 'Identifier: {0}, is not in valid format.',
+                DESCRIPTION: 'The identifier must follow the format ddd, where d is a digit between [0-9].'
+            }
+        },
+        ANNEX: {
+            INVALID_VALUE: {
+                MESSAGE: 'Annex: {0}, is not in valid value.',
+                DESCRIPTION: `The annex must have one of the allowed values, they are: ${ANNEX_ALLOWED.join(', ')}`
+            }
+        },
+        HEADER_PRODUCT: {
+            INVALID_VALUE: {
+                MESSAGE: 'Product: {0}, is not in valid value.',
+                DESCRIPTION: `The product must have one of the allowed values, they are: ${HEADER_PRODUCTS_ALLOWED.join(', ')}`
+            }
+        },
+        STATE: {
+            INVALID_VALUE: {
+                MESSAGE: '{0}: {1}, is not in valid value.',
+                DESCRIPTION: `The {0} must have one of the allowed values, they are: ${STATE_ALLOWED.join(', ')}`
+            }
+        },
+        CNPJ: {
+            INVALID_VALUE: {
+                MESSAGE: '{0}: {1}, is not in valid value.',
+                DESCRIPTION: `The {0} must follow the format ^\d{14}$ , where d is a digit between [0-9].`
+            }
+        },
+        IE: {
+            INVALID_VALUE: {
+                MESSAGE: '{0}: {1}, is not in valid value.',
+                DESCRIPTION: `The {0} must follow the format ^\d{0,14}$ or 'ISENTO' , where d is a digit between [0-9].`
+            }
+        },
+        ZIP_CODE: {
+            INVALID_FORMAT: {
+                MESSAGE: 'Zip Code: {0}, is not in valid format.',
+                DESCRIPTION: 'The zip_code must follow the format ^\d{8}$, where d is a digit between [0-9].'
+            }
+        },
+        CATEGORY: {
+            INVALID_VALUE: {
+                MESSAGE: 'Category: {0}, is not in valid value.',
+                DESCRIPTION: `The category must have one of the allowed values, they are: ${CATEGORY_ALLOWED.join(', ')}`
+            }
+        },
+        PRODUCT: {
+            INVALID_FORMAT: {
+                MESSAGE: 'Product: {0}, is not in valid value.',
+                DESCRIPTION: `The product must follow the format ^d{0,5}$, where d is a digit between [0-9].`
+            }
+        }
     }
 }

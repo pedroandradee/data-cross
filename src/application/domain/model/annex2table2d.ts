@@ -39,8 +39,8 @@ export class Annex2Table2D extends Entity implements IJSONSerializable, IJSONDes
     private _plate_3?: string
     private _destination?: string
 
-    constructor(id?: string, created_at?: string, updated_at?: string) {
-        super(id, created_at, updated_at)
+    constructor(id?: string, created_at?: string) {
+        super(id, created_at)
     }
 
     get ie_issuer(): string | undefined {
@@ -310,7 +310,6 @@ export class Annex2Table2D extends Entity implements IJSONSerializable, IJSONDes
         return {
             id: super.id,
             created_at: super.created_at,
-            updated_at: super.updated_at,
             ie_issuer: this.ie_issuer,
             cnpj_issuer: this.cnpj_issuer,
             state_issuer: this.state_issuer,
