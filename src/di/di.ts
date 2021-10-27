@@ -30,7 +30,6 @@ import { Annex2Table2hRepoModel } from '../infrastructure/database/schema/annex2
 import { Annex2Table2H } from '../application/domain/model/annex2table2h'
 import { Annex2Table2HEntity } from '../infrastructure/entity/annex2table2h'
 import { Annex2Table2HMapper } from '../infrastructure/entity/mapper/annex2table2h.mapper'
-import { IService } from '../application/port/service.interface'
 import Header from '../application/domain/model/header'
 import { HeaderService } from '../application/service/header.service'
 import { HeaderMapper } from '../infrastructure/entity/mapper/header.mapper'
@@ -39,6 +38,7 @@ import { HeaderRepoModel } from '../infrastructure/database/schema/header.schema
 import { IRepository } from '../application/port/repository.interface'
 import { HeaderRepository } from '../infrastructure/repository/header.repository'
 import { HeaderController } from '../ui/controllers/header.controller'
+import { IHeaderService } from '../application/port/header.service'
 
 class IoC {
     private readonly _container: Container
@@ -83,7 +83,7 @@ class IoC {
 
         // Services
         this._container
-            .bind<IService<Header>>(Identifier.HEADER_SERVICE)
+            .bind<IHeaderService>(Identifier.HEADER_SERVICE)
             .to(HeaderService).inSingletonScope()
         this._container
             .bind<IAnnex2Table2DService>(Identifier.ANNEX2TABLE2D_SERVICE)

@@ -1,5 +1,4 @@
 import { inject, injectable } from 'inversify'
-import { IService } from '../port/service.interface'
 import Header from '../domain/model/header'
 import { IQuery } from '../port/query.interface'
 import { Identifier } from '../../di/identifiers'
@@ -13,9 +12,10 @@ import { MultiStatus } from '../domain/model/multi.status'
 import { StatusSuccess } from '../domain/model/status.success'
 import HttpStatus from 'http-status-codes'
 import { ValidationException } from '../domain/exception/validation.exception'
+import { IHeaderService } from '../port/header.service'
 
 @injectable()
-export class HeaderService implements IService<Header> {
+export class HeaderService implements IHeaderService {
 
     constructor(
         @inject(Identifier.HEADER_REPOSITORY) readonly _repository: IRepository<Header>
