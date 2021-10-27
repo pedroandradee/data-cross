@@ -78,8 +78,12 @@ export abstract class Strings {
                 DESCRIPTION: `The year must be greater than 1678 and less than 3000.`
             },
             MONTH_NOT_ALLOWED: {
-                MESSAGE: 'Month year {0} has month not allowed.',
+                MESSAGE: 'Date {0} has month not allowed.',
                 DESCRIPTION: `The month must be a value between ${MONTHS.join(', ')}`
+            },
+            DAY_NOT_ALLOWED: {
+                MESSAGE: 'Date {0} has month not allowed.',
+                DESCRIPTION: `The day must be a value between {0}.`
             },
             INVALID_MONTH_YEAR_FORMAT: {
                 MESSAGE: 'Month year: {0}, is not in valid format.',
@@ -113,19 +117,19 @@ export abstract class Strings {
         ANNEX: {
             INVALID_VALUE: {
                 MESSAGE: 'Annex: {0}, is not in valid value.',
-                DESCRIPTION: `The annex must have one of the allowed values, they are: ${ANNEX_ALLOWED.join(',')}`
+                DESCRIPTION: `The annex must have one of the allowed values, they are: ${ANNEX_ALLOWED.join(', ')}`
             }
         },
         HEADER_PRODUCT: {
             INVALID_VALUE: {
                 MESSAGE: 'Product: {0}, is not in valid value.',
-                DESCRIPTION: `The product must have one of the allowed values, they are: ${HEADER_PRODUCTS_ALLOWED.join(',')}`
+                DESCRIPTION: `The product must have one of the allowed values, they are: ${HEADER_PRODUCTS_ALLOWED.join(', ')}`
             }
         },
         STATE: {
             INVALID_VALUE: {
                 MESSAGE: '{0}: {1}, is not in valid value.',
-                DESCRIPTION: `The {0} must have one of the allowed values, they are: ${STATE_ALLOWED.join(',')}`
+                DESCRIPTION: `The {0} must have one of the allowed values, they are: ${STATE_ALLOWED.join(', ')}`
             }
         },
         CNPJ: {
@@ -149,7 +153,7 @@ export abstract class Strings {
         CATEGORY: {
             INVALID_VALUE: {
                 MESSAGE: 'Category: {0}, is not in valid value.',
-                DESCRIPTION: `The category must have one of the allowed values, they are: ${CATEGORY_ALLOWED.join(',')}`
+                DESCRIPTION: `The category must have one of the allowed values, they are: ${CATEGORY_ALLOWED.join(', ')}`
             }
         }
     }

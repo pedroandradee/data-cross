@@ -414,9 +414,6 @@ export default class Header extends Entity implements IJSONSerializable, IJSONDe
         if (json.annex_origin !== undefined) {
             this.annex_origin = json.annex_origin
         }
-        if (json.sha512 !== undefined) {
-            this.sha512 = json.sha512
-        }
 
         return this
     }
@@ -425,7 +422,6 @@ export default class Header extends Entity implements IJSONSerializable, IJSONDe
         return {
             id: this.id || undefined,
             created_at: this.created_at || undefined,
-            updated_at: this.updated_at || undefined,
             month_year: this.month_year || undefined,
             identifier: this.identifier || undefined,
             annex: this.annex || undefined,
@@ -455,7 +451,7 @@ export default class Header extends Entity implements IJSONSerializable, IJSONDe
             local: this.local || undefined,
             date: this.date || undefined,
             hour: this.hour || undefined,
-            annex_origin: this.annex_origin || undefined
+            annex_origin: this.annex_origin !== undefined ? this.annex_origin : undefined
         }
     }
 }

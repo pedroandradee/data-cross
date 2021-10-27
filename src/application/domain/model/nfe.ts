@@ -39,8 +39,8 @@ export class NFE extends Entity implements IJSONSerializable, IJSONDeserializabl
     private _st_bc_value_held_dest?: number
     private _icms_st_bc_value_held_dest?: number
 
-    constructor(id?: string, created_at?: string, updated_at?: string) {
-        super(id, created_at, updated_at)
+    constructor(id?: string, created_at?: string) {
+        super(id, created_at)
     }
 
     get passkey_number(): string | undefined {
@@ -310,7 +310,6 @@ export class NFE extends Entity implements IJSONSerializable, IJSONDeserializabl
         return {
             id: super.id,
             created_at: super.created_at,
-            updated_at: super.updated_at,
             passkey_number: this.passkey_number,
             electronic_invoice_number: this.electronic_invoice_number,
             issue_date_time: this.issue_date_time,

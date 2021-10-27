@@ -29,8 +29,6 @@ export class HeaderMapper implements IEntityMapper<Header, HeaderEntity> {
 
         if (json.id !== undefined) result.id = json.id
         if (json.created_at !== undefined) result.created_at = json.created_at
-        if (json.updated_at !== undefined) result.updated_at = json.updated_at
-        if (json.sha512 !== undefined) result.sha512 = json.sha512
         if (json.month_year !== undefined) result.month_year = json.month_year
         if (json.identifier !== undefined) result.identifier = json.identifier
         if (json.annex !== undefined) result.annex = json.annex
@@ -89,8 +87,6 @@ export class HeaderMapper implements IEntityMapper<Header, HeaderEntity> {
 
         if (item.id !== undefined) result.id = item.id
         if (item.created_at !== undefined) result.created_at = item.created_at
-        if (item.updated_at !== undefined) result.updated_at = item.updated_at
-        if (item.sha512 !== undefined) result.sha512 = item.sha512
         if (item.month_year !== undefined) result.month_year = item.month_year
         if (item.identifier !== undefined) result.identifier = item.identifier
         if (item.annex !== undefined) result.annex = item.annex

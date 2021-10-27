@@ -1,5 +1,4 @@
 import { injectable } from 'inversify'
-import CryptoJS from 'crypto-js'
 import { IRepository } from '../../../application/port/repository.interface'
 import { IQuery } from '../../../application/port/query.interface'
 import { ILogger } from '../../../utils/custom.logger'
@@ -27,7 +26,6 @@ export abstract class BaseRepository<T extends Entity, TModel> implements IRepos
     }
 
     public async create(item: T): Promise<T | undefined> {
-        item.sha512 = await BaseRepository.generateSha512(item.concatToString())
         const itemNew: TModel = this.mapper.transform(item)
         return new Promise<T | undefined>((resolve, reject) => {
             this.Model.create(itemNew)
@@ -116,26 +114,16 @@ export abstract class BaseRepository<T extends Entity, TModel> implements IRepos
     }
 
     public async checkExists(item: T): Promise<boolean> {
-        const sha512 = await BaseRepository.generateSha512(item.concatToString())
+        const resource = item.toJSON()
+        // Remove read only fields
+        delete resource.id
+        delete resource.created_at
         const query: Query = new Query()
-            .fromJSON({ filters: { _id: { $ne: item.id }, sha512 } })
+            .fromJSON({ filters: { _id: { $ne: item.id }, ...resource } })
         return new Promise<boolean>((resolve, reject) => {
             this.findOne(query)
                 .then((result: T | undefined) => resolve(!!result))
                 .catch(err => reject(this.mongoDBErrorListener(err)))
         })
-    }
-
-    /**
-     * Generate the SHA512 hash for any string
-     * @param message
-     */
-    private static async generateSha512(message: string): Promise<string> {
-        try {
-            const hash = CryptoJS.SHA512(message).toString()
-            return Promise.resolve(hash)
-        } catch (err) {
-            return Promise.reject(err)
-        }
     }
 }
