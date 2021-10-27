@@ -6,8 +6,8 @@
 export abstract class Identifier {
     public static readonly APP: any = Symbol.for('App')
 
-    // TODO: Alterado para letras minusculas os nomes dos anexos D e H
     // Controllers
+    public static readonly PRODUCT_CONTROLLER: any = Symbol.for('ProductController')
     public static readonly HEADER_CONTROLLER: any = Symbol.for('HeaderController')
     public static readonly HOME_CONTROLLER: any = Symbol.for('HomeController')
     public static readonly ANNEX2TABLE2D_CONTROLLER: any = Symbol.for('Annex2Table2DController')
@@ -16,6 +16,7 @@ export abstract class Identifier {
     public static readonly NFE_CONTROLLER: any = Symbol.for('NFEController')
 
     // Services
+    public static readonly PRODUCT_SERVICE: any = Symbol.for('ProductService')
     public static readonly HEADER_SERVICE: any = Symbol.for('HeaderService')
     public static readonly ANNEX2TABLE2D_SERVICE: any = Symbol.for('Annex2Table2DService')
     public static readonly ANNEX2TABLE2H_SERVICE: any = Symbol.for('Annex2Table2HService')
@@ -23,6 +24,7 @@ export abstract class Identifier {
     public static readonly NFE_SERVICE: any = Symbol.for('NFEService')
 
     // Repositories
+    public static readonly PRODUCT_REPOSITORY: any = Symbol.for('ProductRepository')
     public static readonly HEADER_REPOSITORY: any = Symbol.for('HeaderRepository')
     public static readonly ANNEX2TABLE2D_REPOSITORY: any = Symbol.for('Annex2Table2DRepository')
     public static readonly ANNEX2TABLE2H_REPOSITORY: any = Symbol.for('Annex2Table2HRepository')
@@ -30,12 +32,14 @@ export abstract class Identifier {
     public static readonly NFE_REPOSITORY: any = Symbol.for('NFERepository')
 
     // Models
+    public static readonly PRODUCT_REPO_MODEL: any = Symbol.for('ProductRepoModel')
     public static readonly HEADER_REPO_MODEL: any = Symbol.for('HeaderRepoModel')
     public static readonly ANNEX2TABLE2D_REPO_MODEL: any = Symbol.for('Annex2Table2DRepoModel')
     public static readonly ANNEX2TABLE2H_REPO_MODEL: any = Symbol.for('Annex2Table2HRepoModel')
     public static readonly NFE_REPO_MODEL: any = Symbol.for('NFERepoModel')
 
     // Mappers
+    public static readonly PRODUCT_MAPPER: any = Symbol.for('ProductMapper')
     public static readonly HEADER_MAPPER: any = Symbol.for('HeaderMapper')
     public static readonly ANNEX2TABLE2D_MAPPER: any = Symbol.for('Annex2Table2DMapper')
     public static readonly ANNEX2TABLE2H_MAPPER: any = Symbol.for('Annex2Table2HMapper')

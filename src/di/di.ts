@@ -39,6 +39,14 @@ import { IRepository } from '../application/port/repository.interface'
 import { HeaderRepository } from '../infrastructure/repository/header.repository'
 import { HeaderController } from '../ui/controllers/header.controller'
 import { IHeaderService } from '../application/port/header.service'
+import { ProductController } from '../ui/controllers/product.controller'
+import { IProductService } from '../application/port/product.service'
+import { ProductService } from '../application/service/product.service'
+import Product from '../application/domain/model/product'
+import { ProductRepository } from '../infrastructure/repository/product.repository'
+import { ProductRepoModel } from '../infrastructure/database/schema/product.schema'
+import { ProductEntity } from '../infrastructure/entity/product'
+import { ProductMapper } from '../infrastructure/entity/mapper/product.mapper'
 
 class IoC {
     private readonly _container: Container
@@ -72,6 +80,7 @@ class IoC {
         this._container.bind(Identifier.APP).to(App).inSingletonScope()
 
         // Controllers
+        this._container.bind<ProductController>(Identifier.PRODUCT_CONTROLLER).to(ProductController).inSingletonScope()
         this._container.bind<HeaderController>(Identifier.HEADER_CONTROLLER).to(HeaderController).inSingletonScope()
         this._container.bind<HomeController>(Identifier.HOME_CONTROLLER).to(HomeController).inSingletonScope()
         this._container
@@ -82,6 +91,9 @@ class IoC {
             .to(Annex2table2hController).inSingletonScope()
 
         // Services
+        this._container
+            .bind<IProductService>(Identifier.PRODUCT_SERVICE)
+            .to(ProductService).inSingletonScope()
         this._container
             .bind<IHeaderService>(Identifier.HEADER_SERVICE)
             .to(HeaderService).inSingletonScope()
@@ -94,6 +106,9 @@ class IoC {
 
         // Repositories
         this._container
+            .bind<IRepository<Product>>(Identifier.PRODUCT_REPOSITORY)
+            .to(ProductRepository).inSingletonScope()
+        this._container
             .bind<IRepository<Header>>(Identifier.HEADER_REPOSITORY)
             .to(HeaderRepository).inSingletonScope()
         this._container
@@ -104,11 +119,15 @@ class IoC {
             .to(Annex2Table2HRepository).inSingletonScope()
 
         // Models
+        this._container.bind(Identifier.PRODUCT_REPO_MODEL).toConstantValue(ProductRepoModel)
         this._container.bind(Identifier.HEADER_REPO_MODEL).toConstantValue(HeaderRepoModel)
         this._container.bind(Identifier.ANNEX2TABLE2D_REPO_MODEL).toConstantValue(Annex2Table2dRepoModel)
         this._container.bind(Identifier.ANNEX2TABLE2H_REPO_MODEL).toConstantValue(Annex2Table2hRepoModel)
 
         // Mappers
+        this._container
+            .bind<IEntityMapper<Product, ProductEntity>>(Identifier.PRODUCT_MAPPER)
+            .to(ProductMapper).inSingletonScope()
         this._container
             .bind<IEntityMapper<Header, HeaderEntity>>(Identifier.HEADER_MAPPER)
             .to(HeaderMapper).inSingletonScope()

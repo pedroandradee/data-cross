@@ -29,6 +29,12 @@ export abstract class Strings {
         NOT_FOUND_DESCRIPTION: 'Header not found or already removed. A new operation for the same resource is required!'
     }
 
+    public static readonly PRODUCT: any = {
+        ALREADY_REGISTERED: 'A product already registered!',
+        NOT_FOUND: 'Product not found!',
+        NOT_FOUND_DESCRIPTION: 'Product not found or already removed. A new operation for the same resource is required!'
+    }
+
     public static readonly ANNEX2TABLE2D: any = {
         ALREADY_REGISTERED: 'A Annex2Table2D already registered!',
         NOT_FOUND: 'Annex2Table2D not found!',
@@ -154,6 +160,12 @@ export abstract class Strings {
             INVALID_VALUE: {
                 MESSAGE: 'Category: {0}, is not in valid value.',
                 DESCRIPTION: `The category must have one of the allowed values, they are: ${CATEGORY_ALLOWED.join(', ')}`
+            }
+        },
+        PRODUCT: {
+            INVALID_FORMAT: {
+                MESSAGE: 'Product: {0}, is not in valid value.',
+                DESCRIPTION: `The product must follow the format ^d{0,5}$, where d is a digit between [0-9].`
             }
         }
     }

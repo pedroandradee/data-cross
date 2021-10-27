@@ -2,6 +2,15 @@ import { ValidationException } from '../exception/validation.exception'
 import { Strings } from '../../../utils/strings'
 
 export class TextFieldsValidator {
+
+    public static validateTextFieldOnlyLetter(text: string, min: number, max: number, field: string): void | ValidationException {
+        this.validateTextField(text, min, max, field)
+        if (!new RegExp(`^[A-Za-z]{${min},${max}}$`, 'gi').test(text)) {
+            throw new ValidationException(
+                `${field} must contain only Letter.`)
+        }
+    }
+
     public static validateTextField(text: string, min: number, max: number, field: string): void | ValidationException {
         if (typeof text !== 'string') {
             throw new ValidationException(Strings.ERROR_MESSAGE.VALIDATE.INVALID_FIELDS,

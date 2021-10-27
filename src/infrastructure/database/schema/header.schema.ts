@@ -33,8 +33,7 @@ const schema: any = {
     local: String,
     date: String,
     hour: String,
-    annex_origin: String,
-    sha512: String
+    annex_origin: String
 }
 
 const options: any = {
@@ -48,4 +47,4 @@ const options: any = {
         }
     }
 }
-export const HeaderRepoModel = Mongoose.model<IHeader>('header', new Mongoose.Schema(schema, options))
+export const HeaderRepoModel = Mongoose.model<IHeader>('headers', new Mongoose.Schema(schema, options))
