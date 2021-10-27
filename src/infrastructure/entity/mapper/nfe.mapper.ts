@@ -10,7 +10,6 @@ export class NFEMapper implements IEntityMapper<NFEModel, NFEEntity> {
 
         if (json.id !== undefined) result.id = json.id
         if (json.created_at !== undefined) result.created_at = json.created_at
-        if (json.updated_at !== undefined) result.updated_at = json.updated_at
         if (json.passkey_number !== undefined) result.passkey_number = json.passkey_number
         if (json.electronic_invoice_number !== undefined) result.electronic_invoice_number = json.electronic_invoice_number
         if (json.issue_date_time !== undefined) result.issue_date_time = json.issue_date_time
@@ -53,7 +52,6 @@ export class NFEMapper implements IEntityMapper<NFEModel, NFEEntity> {
 
         if (item.id !== undefined) result.id = item.id
         if (item.created_at !== undefined) result.created_at = item.created_at
-        if (item.updated_at !== undefined) result.updated_at = item.updated_at
         if (item.passkey_number !== undefined) result.passkey_number = item.passkey_number
         if (item.electronic_invoice_number !== undefined) result.electronic_invoice_number = item.electronic_invoice_number
         if (item.issue_date_time !== undefined) result.issue_date_time = item.issue_date_time

@@ -10,7 +10,6 @@ export class AliquotMapper implements IEntityMapper<AliquotModel, AliquotEntity>
 
         if (json.id !== undefined) result.id = json.id
         if (json.created_at !== undefined) result.created_at = json.created_at
-        if (json.updated_at !== undefined) result.updated_at = json.updated_at
         if (json.standard !== undefined) result.standard = json.standard
         if (json.num !== undefined) result.num = json.num
         if (json.year !== undefined) result.year = json.year
@@ -33,7 +32,6 @@ export class AliquotMapper implements IEntityMapper<AliquotModel, AliquotEntity>
 
         if (item.id !== undefined) result.id = item.id
         if (item.created_at !== undefined) result.created_at = item.created_at
-        if (item.updated_at !== undefined) result.updated_at = item.updated_at
         if (item.standard !== undefined) result.standard = item.standard
         if (item.num !== undefined) result.num = item.num
         if (item.year !== undefined) result.year = item.year

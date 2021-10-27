@@ -10,7 +10,6 @@ export class Annex2Table2DMapper implements IEntityMapper<Annex2Table2DModel, An
 
         if (json.id !== undefined) result.id = json.id
         if (json.created_at !== undefined) result.created_at = json.created_at
-        if (json.updated_at !== undefined) result.updated_at = json.updated_at
         if (json.ie_issuer !== undefined) result.ie_issuer = json.ie_issuer
         if (json.cnpj_issuer !== undefined) result.cnpj_issuer = json.cnpj_issuer
         if (json.state_issuer !== undefined) result.state_issuer = json.state_issuer
@@ -53,7 +52,6 @@ export class Annex2Table2DMapper implements IEntityMapper<Annex2Table2DModel, An
 
         if (item.id !== undefined) result.id = item.id
         if (item.created_at !== undefined) result.created_at = item.created_at
-        if (item.updated_at !== undefined) result.updated_at = item.updated_at
         if (item.ie_issuer !== undefined) result.ie_issuer = item.ie_issuer
         if (item.cnpj_issuer !== undefined) result.cnpj_issuer = item.cnpj_issuer
         if (item.state_issuer !== undefined) result.state_issuer = item.state_issuer

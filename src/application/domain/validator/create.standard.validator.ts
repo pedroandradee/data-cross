@@ -8,12 +8,10 @@ export class StandardValidator {
         const fields: Array<string> = []
 
         if (!item.standard) fields.push('standard')
-        // TODO: Verificar o valor 10
-        else TextFieldsValidator.validateStringIsNumberField(item.standard, 10, 'standard')
+        else TextFieldsValidator.validateStringIsNumberField(item.standard, 4, 10, 'standard')
 
         if (!item.num) fields.push('num')
-        // TODO: Verificar o valor 10
-        else TextFieldsValidator.validateStringIsNumberField(item.num, 10, 'num')
+        else TextFieldsValidator.validateStringIsNumberField(item.num, 1, 8, 'num')
 
         if (!item.year) fields.push('year')
         else YearValidator.validate(item.year)
@@ -22,7 +20,6 @@ export class StandardValidator {
         if (!item.state) fields.push('state')
         if (!item.start_date) fields.push('start_date')
         if (!item.end_date) fields.push('end_date')
-
 
         if (!item.value) fields.push('value')
         else TextFieldsValidator.validateNumberField(item.value, 'value')

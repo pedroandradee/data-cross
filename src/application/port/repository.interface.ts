@@ -61,4 +61,12 @@ export interface IRepository<T> {
      * @throws {RepositoryException}
      */
     count(query?: IQuery): Promise<number>
+
+    /**
+     * Check if the item already exists
+     *
+     * @param item Item to be checked
+     * @return {Promise<boolean>}
+     */
+    checkExists(item: T): Promise<boolean>
 }

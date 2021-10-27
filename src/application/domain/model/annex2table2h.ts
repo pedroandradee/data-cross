@@ -24,9 +24,9 @@ export class Annex2Table2H extends Entity implements IJSONSerializable, IJSONDes
     private _county?: string
     private _zip_code?: string
 
-    constructor(id?: string, created_at?: string, updated_at?: string) {
+    constructor(id?: string, created_at?: string) {
 
-        super(id, created_at, updated_at)
+        super(id, created_at)
     }
 
     get cnpj_issuer(): string | undefined {
@@ -161,7 +161,6 @@ export class Annex2Table2H extends Entity implements IJSONSerializable, IJSONDes
         return {
             id: super.id,
             created_at: super.created_at,
-            updated_at: super.updated_at,
             cnpj_issuer: this.cnpj_issuer,
             ie_issuer: this.ie_issuer,
             state_issuer: this.state_issuer,
@@ -174,7 +173,7 @@ export class Annex2Table2H extends Entity implements IJSONSerializable, IJSONDes
             address: this.address,
             district: this.district,
             county: this.county,
-            zip_code: this.zip_code,
+            zip_code: this.zip_code
         }
     }
 }
