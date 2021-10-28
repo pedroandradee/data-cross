@@ -86,6 +86,8 @@ export class Standard extends Entity implements IJSONSerializable, IJSONDeserial
             json = JSON.parse(json)
         }
 
+        if (json.id !== undefined) this.id = json.id
+        if (json.created_at !== undefined) this.created_at = json.created_at
         if (json.standard !== undefined) this.standard = json.standard
         if (json.num !== undefined) this.num = json.num
         if (json.year !== undefined) this.year = json.year
@@ -100,6 +102,8 @@ export class Standard extends Entity implements IJSONSerializable, IJSONDeserial
 
     public toJSON(): any {
         return {
+            id: this.id || undefined,
+            created_at: this.created_at || undefined,
             standard: this.standard || undefined,
             num: this.num || undefined,
             year: this.year || undefined,

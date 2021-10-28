@@ -1,3 +1,4 @@
+import { TypeStandard } from 'application/domain/utils/standard.types'
 import { Entity } from './entity'
 
 export class Standard extends Entity {
@@ -10,5 +11,6 @@ export class Standard extends Entity {
     public end_date?: string
     public product?: string
     public value?: number
+    public type?: TypeStandard
 
 }

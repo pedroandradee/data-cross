@@ -8,6 +8,8 @@ import { IQuery } from '../../application/port/query.interface'
 import { Query } from '../../infrastructure/repository/query/query'
 import { IAliquotService } from '../../application/port/aliquot.service'
 import { Aliquot } from '../../application/domain/model/aliquot'
+import { MultiStatus } from '../../application/domain/model/multi.status'
+import { TypeStandard } from '../../application/domain/utils/standard.types'
 
 @controller('/v1/scanc/aliquot')
 export class AliquotController {
@@ -25,9 +27,19 @@ export class AliquotController {
     @httpPost('/')
     public async create(@request() req: Request, @response() res: Response): Promise<Response> {
         try {
-            const entity: Aliquot = new Aliquot().fromJSON(req.body)
-            const result: Aliquot | undefined = await this._service.add(entity)
-            return res.status(HttpStatus.CREATED).send(this.toJSONView(result))
+            let items: Array<any> = req.body
+            if (!(req.body instanceof Array)) {
+                items = [req.body]
+            }
+            const entities: Array<Aliquot> = items
+                .map((item: Aliquot) => {
+                    delete item.id
+                    delete item.created_at
+                    return new Aliquot().fromJSON(item)
+                })
+
+            const multiStatus: MultiStatus<Aliquot> = await this._service.addMultiples(entities)
+            return res.status(HttpStatus.MULTI_STATUS).send(this.toJSONView(multiStatus))
         } catch (err) {
             return AliquotController.handlerError(res, err)
         }
@@ -37,7 +49,7 @@ export class AliquotController {
     public async getAll(@request() req: Request, @response() res: Response): Promise<Response> {
         try {
             const query: IQuery = new Query().fromJSON(req.query)
-            const othersFilter = {}
+            const othersFilter = { type: TypeStandard.ALIQUOT }
             query.addFilter(othersFilter)
             const result: Array<Aliquot> = await this._service.getAll(query)
             const count: number = await this._service.count(query)
@@ -61,7 +73,7 @@ export class AliquotController {
         }
     }
 
-    private toJSONView(entity: Aliquot | Array<Aliquot> | undefined): object {
+    private toJSONView(entity: Aliquot | Array<Aliquot> | MultiStatus<Aliquot> | undefined): object {
         if (entity instanceof Array) return entity.map(item => this.toJSONView(item))
         return entity?.toJSON()
     }

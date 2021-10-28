@@ -1,4 +1,5 @@
 import { inject, injectable } from 'inversify'
+import HttpStatus from 'http-status-codes'
 import { Identifier } from '../../di/identifiers'
 import { IQuery } from '../port/query.interface'
 import { ConflictException } from '../domain/exception/conflict.exception'
@@ -8,6 +9,10 @@ import { IPMPFService } from '../port/pmpf.service'
 import { PMPF } from '../domain/model/pmpf'
 import { IPMPFRepository } from '../port/pmpf.repository'
 import { PMPFValidator } from '../domain/validator/create.pmpf.validator'
+import { StatusSuccess } from '../domain/model/status.success'
+import { StatusError } from '../domain/model/status.error'
+import { ValidationException } from '../domain/exception/validation.exception'
+import { MultiStatus } from '../domain/model/multi.status'
 
 @injectable()
 export class PMPFService implements IPMPFService {
@@ -24,6 +29,31 @@ export class PMPFService implements IPMPFService {
         if (exists) throw new ConflictException(Strings.stringsException('PMPF').ALREADY_REGISTERED)
 
         return this._repository.create(item)
+    }
+
+    public async addMultiples(items: | Array<PMPF>): Promise<MultiStatus<PMPF>> {
+        const statusSuccessArr: Array<StatusSuccess<PMPF>> = new Array<StatusSuccess<PMPF>>()
+        const statusErrorArr: Array<StatusError<PMPF>> = new Array<StatusError<PMPF>>()
+
+        for (const item of items) {
+            try {
+                const pmpf: PMPF | undefined = await this.add(item)
+                if (pmpf) {
+                    statusSuccessArr.push(new StatusSuccess<PMPF>(HttpStatus.CREATED, pmpf))
+                }
+            } catch (err: any) {
+                let statusCode: number = HttpStatus.INTERNAL_SERVER_ERROR
+                if (err instanceof ValidationException) statusCode = HttpStatus.BAD_REQUEST
+                if (err instanceof ConflictException) statusCode = HttpStatus.CONFLICT
+                statusErrorArr.push(new StatusError<PMPF>(statusCode, err.message, err.description, item))
+            }
+        }
+
+        const multiStatus: MultiStatus<PMPF> = new MultiStatus<PMPF>()
+        multiStatus.success = statusSuccessArr
+        multiStatus.error = statusErrorArr
+
+        return Promise.resolve(multiStatus)
     }
 
     public remove(id: string): Promise<boolean> {

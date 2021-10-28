@@ -9,7 +9,6 @@ export abstract class Entity {
     private _id?: string
     private _created_at?: string
 
-
     protected constructor(id?: string, created_at?: string) {
         this._id = id
         this._created_at = created_at

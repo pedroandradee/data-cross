@@ -169,6 +169,10 @@ export abstract class Strings {
         VALIDATE_PRODUCT: {
             MESSAGE: '{0} is not a product type.',
             DESCRIPTION: 'Options are {0}.'
+        },
+        VALIDATE_STANDART_TYPE: {
+            MESSAGE: '{0} is not a standart type.',
+            DESCRIPTION: 'Options are {0}.'
         }
     }
 

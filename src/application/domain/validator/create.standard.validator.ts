@@ -1,5 +1,6 @@
 import { ValidationException } from '../exception/validation.exception'
 import { Standard } from '../model/standard'
+import { TypeStandard } from '../utils/standard.types'
 import { DateValidator } from './date'
 import { StateValidator } from './state'
 import { TextFieldsValidator } from './text.fields.validator'
@@ -10,7 +11,7 @@ export class StandardValidator {
         const fields: Array<string> = []
 
         if (!item.standard) fields.push('standard')
-        else TextFieldsValidator.validateStringIsNumberField(item.standard, 4, 10, 'standard')
+        else TextFieldsValidator.validateTextField(item.standard, 4, 10, 'standard')
 
         if (!item.num) fields.push('num')
         else TextFieldsValidator.validateStringIsNumberField(item.num, 1, 8, 'num')
@@ -29,6 +30,9 @@ export class StandardValidator {
 
         if (!item.value) fields.push('value')
         else TextFieldsValidator.validateNumberField(item.value, 'value')
+
+        if (!item.type) fields.push('type')
+        else TextFieldsValidator.validateStandardType(item.type, TypeStandard)
 
         if (fields.length > 0) throw new ValidationException('Required fields were not provided...',
             'Aliquot validation: '.concat(fields.join(', ')).concat(' required'))

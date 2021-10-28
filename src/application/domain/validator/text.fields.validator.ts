@@ -65,4 +65,12 @@ export class TextFieldsValidator {
                 `${field} must contain a positive value greater than 0.`)
         }
     }
+
+    public static validateStandardType(type: string, enumeration: any): void | ValidationException {
+        const op: Array<string> = Object.values(enumeration)
+        // Validate date format ISO 8601
+        if (!op.includes(type))
+            throw new ValidationException(Strings.ERROR_MESSAGE.VALIDATE_STANDART_TYPE.MESSAGE.replace('{0}', type),
+                Strings.ERROR_MESSAGE.VALIDATE_STANDART_TYPE.DESCRIPTION.replace('{0}', op.join(', ')))
+    }
 }

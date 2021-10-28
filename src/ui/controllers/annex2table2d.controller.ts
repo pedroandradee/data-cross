@@ -36,7 +36,6 @@ export class Annex2table2dController {
     @httpGet('/')
     public async getAll(@request() req: Request, @response() res: Response): Promise<Response> {
         try {
-            console.log('oi')
             const query: IQuery = new Query().fromJSON(req.query)
             const othersFilter = {}
             query.addFilter(othersFilter)

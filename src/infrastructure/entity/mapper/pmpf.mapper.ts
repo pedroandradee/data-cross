@@ -13,6 +13,7 @@ export class PMPFMapper implements IEntityMapper<PMPFModel, PMPFEntity> {
         if (json.standard !== undefined) result.standard = json.standard
         if (json.num !== undefined) result.num = json.num
         if (json.year !== undefined) result.year = json.year
+        if (json.type !== undefined) result.type = json.type
         if (json.state !== undefined) result.state = json.state
         if (json.start_date !== undefined) result.start_date = json.start_date
         if (json.end_date !== undefined) result.end_date = json.end_date
@@ -34,6 +35,7 @@ export class PMPFMapper implements IEntityMapper<PMPFModel, PMPFEntity> {
         if (item.standard !== undefined) result.standard = item.standard
         if (item.num !== undefined) result.num = item.num
         if (item.year !== undefined) result.year = item.year
+        if (item.type !== undefined) result.type = item.type
         if (item.state !== undefined) result.state = item.state
         if (item.start_date !== undefined) result.start_date = item.start_date
         if (item.end_date !== undefined) result.end_date = item.end_date
